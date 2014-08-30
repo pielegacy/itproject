@@ -6,7 +6,7 @@ function rInt(min, max) {
 }
 var c = document.getElementById("gamescreen");
 var ctx = c.getContext("2d");
-var bgcolor = "#e5e5e5";
+var bgcolor = "#000";
 var keysDown = {};
 addEventListener("keydown", function (e) {
 	keysDown[e.keyCode] = true;
@@ -56,28 +56,29 @@ function sprite(src, x, y, w, h, f, l, a, loaded){
     }
 }
 //Tile Loader//
+//ts = source, l = level array //
 function world(ts, l, loaded){
     var self = this;
-    var ts = ts;
-    var l = l;
-    var w = [];
+    self.ts = ts;
+    self.l = l;
+    self.w = [];
     self.xval = 0;
     self.yval = 0;
     self.loaded = loaded;
-    var count = 0;
-    for (i = 0; i < l.length; i++){
-        for (j = 0; j < l[i].length; j++){
-            block = new sprite(ts, 40 * j, 40 * i, 40, 40, l[i][j], 0, 3, false);
-            w.push(block);
+    self.count = 0;
+    for (i = 0; i < self.l.length; i++){
+        for (j = 0; j < self.l[i].length; j++){
+            block = new sprite(ts, 40 * j, 40 * i, 40, 40, self.l[i][j], 0, 3, false);
+            self.w.push(block);
             self.xval += 1;
-            count += 1;
+            self.count += 1;
         }
         self.yval += 1;
     }
     self.update = function(){
-            for (k = 0; k < w.length; k++){
-                if (w[k].loaded){
-                    w[k].update();
+            for (k = 0; k < self.w.length; k++){
+                if (self.w[k].loaded){
+                        self.w[k].update();
                     }
             }
     }
@@ -87,21 +88,34 @@ function character(src, x, y, w, h, f, l, a, loaded){
     var self = this;
     self.active = true;
     self.speed = 3;
+    self.moving = false;
     self.spr = new sprite(src, x, y, w, h, f, l, a, false);
     self.update = function(){
         if (self.active){
             self.cfps += 1;
+            self.moving = false;
             if (87 in keysDown){
                 self.spr.y -= self.speed;
+                self.moving = true;
+                self.spr.cl = 1;
             }
             if (83 in keysDown){
                 self.spr.y += self.speed;
+                self.moving = true;
+                self.spr.cl = 1;
             }
             if (65 in keysDown){
                 self.spr.x -= self.speed;
+                self.moving = true;
+                self.spr.cl = 1;
             }
             if (68 in keysDown){
                 self.spr.x += self.speed;
+                self.moving = true;
+                self.spr.cl = 1;
+            }
+            if (self.moving == false){
+                self.spr.cl = 0;
             }
             self.spr.update();
         }
@@ -126,6 +140,15 @@ function enemy(src, x, y, w, h, f, l, a, loaded){
         }
         self.spr.update();
     }
+}
+
+//Collision Detection//
+//s = singular item/character, a = array of characters//
+//TODO: Set this shit up//
+function collide(s,a){
+    var self = this;
+    self.o = s;
+    self.a = a;
 }
 
 function gameupdate(){
