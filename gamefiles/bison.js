@@ -1,4 +1,5 @@
 //bison.js by Alex Billson//
+//version 0.01//
 //Basic Javascript 2D Games Engine//
 
 function rInt(min, max) {
@@ -83,33 +84,35 @@ function world(ts, l, loaded){
             }
     }
 }
+
 // Controlled Player Class //
 function character(src, x, y, w, h, f, l, a, loaded){
     var self = this;
     self.active = true;
     self.speed = 3;
     self.moving = false;
+    self.direction = "undef";
     self.spr = new sprite(src, x, y, w, h, f, l, a, false);
     self.update = function(){
         if (self.active){
             self.cfps += 1;
             self.moving = false;
-            if (87 in keysDown){
+            if (87 in keysDown || self.direction == "up"){
                 self.spr.y -= self.speed;
                 self.moving = true;
                 self.spr.cl = 1;
             }
-            if (83 in keysDown){
+            if (83 in keysDown || self.direction == "down"){
                 self.spr.y += self.speed;
                 self.moving = true;
                 self.spr.cl = 1;
             }
-            if (65 in keysDown){
+            if (65 in keysDown || self.direction == "left"){
                 self.spr.x -= self.speed;
                 self.moving = true;
                 self.spr.cl = 1;
             }
-            if (68 in keysDown){
+            if (68 in keysDown || self.direction == "right"){
                 self.spr.x += self.speed;
                 self.moving = true;
                 self.spr.cl = 1;

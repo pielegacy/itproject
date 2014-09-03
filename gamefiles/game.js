@@ -1,8 +1,6 @@
 function updategame(){
-	level.updateinstance();
-	moose.updatechar();
+	inst.updateinstance();
+	wizard.updatechar();
 }
-var moose = new mainchar(1, 50, 50);
-var larray = [[0,0,0,0]]
-var level = new instance(1, larray);
-
+var wizard = new mainchar(1, 50, 370);
+var inst = new instance(10, wizard);
