@@ -90,24 +90,22 @@ function character(src, x, y, w, h, f, l, a, loaded){
     var self = this;
     self.active = true;
     self.speed = 3;
-    self.moving = false;
+    self.moving = true;
     self.direction = "undef";
     self.spr = new sprite(src, x, y, w, h, f, l, a, false);
     self.update = function(){
         if (self.active){
             self.cfps += 1;
-            self.moving = false;
+            self.moving = true;
             if (87 in keysDown || self.direction == "up"){
                 self.spr.y -= self.speed;
-                self.moving = true;
                 self.spr.cl = 1;
             }
             if (83 in keysDown || self.direction == "down"){
                 self.spr.y += self.speed;
-                self.moving = true;
                 self.spr.cl = 1;
             }
-            if (65 in keysDown || self.direction == "left"){
+            /*if (65 in keysDown || self.direction == "left"){
                 self.spr.x -= self.speed;
                 self.moving = true;
                 self.spr.cl = 1;
@@ -119,7 +117,7 @@ function character(src, x, y, w, h, f, l, a, loaded){
             }
             if (self.moving == false){
                 self.spr.cl = 0;
-            }
+            }*/
             self.spr.update();
         }
     }
