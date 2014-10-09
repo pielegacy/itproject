@@ -27,6 +27,7 @@ function sprite(src, x, y, w, h, f, l, a, loaded){
     self.f = f;
     self.cl = 0;
     self.l = l;
+    self.active = true;
     self.a = a;
     self.cfps = 0;
     self.fps = 10;
@@ -35,25 +36,27 @@ function sprite(src, x, y, w, h, f, l, a, loaded){
     self.spr.onload = function(){self.loaded = true;}
     self.spr.src = self.src;    
     self.update = function(){
-        self.cfps += 1;
-        if (self.cfps > self.fps && self.a == 1){
-            self.cfps = 0;
-            self.cf += 1;
-            if (self.cf >= self.f){
-                self.cf = 0;
+        if (self.active == true){
+            self.cfps += 1;
+            if (self.cfps > self.fps && self.a == 1){
+                self.cfps = 0;
+                self.cf += 1;
+                if (self.cf >= self.f){
+                    self.cf = 0;
+                }
             }
+            if (self.a == 3){
+                if (self.f > 9){
+                    self.cl = Math.floor(self.f / 10);
+                    self.cf = self.f - (Math.floor(self.f / 10) * 10);
+                }
+                if (self.f <=9){
+                    self.cf = self.f;
+                    self.cl = self.l;
+                }
+            }
+            ctx.drawImage(self.spr, self.w * self.cf, self.h * self.cl, self.w, self.h, self.x, self.y, self.w, self.h);
         }
-        if (self.a == 3){
-            if (self.f > 9){
-                self.cl = Math.floor(self.f / 10);
-                self.cf = self.f - (Math.floor(self.f / 10) * 10);
-            }
-            if (self.f <=9){
-                self.cf = self.f;
-                self.cl = self.l;
-            }
-        }
-        ctx.drawImage(self.spr, self.w * self.cf, self.h * self.cl, self.w, self.h, self.x, self.y, self.w, self.h);
     }
 }
 //Tile Loader//
@@ -105,7 +108,7 @@ function character(src, x, y, w, h, f, l, a, loaded){
                 self.spr.y += self.speed;
                 self.spr.cl = 1;
             }
-            /*if (65 in keysDown || self.direction == "left"){
+            if (65 in keysDown || self.direction == "left"){
                 self.spr.x -= self.speed;
                 self.moving = true;
                 self.spr.cl = 1;
@@ -117,7 +120,7 @@ function character(src, x, y, w, h, f, l, a, loaded){
             }
             if (self.moving == false){
                 self.spr.cl = 0;
-            }*/
+            }
             self.spr.update();
         }
     }
