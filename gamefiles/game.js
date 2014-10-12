@@ -4,5 +4,4 @@ var mobs = new mobloader(10);
 function updategame(){
 	wizard.updatechar();
     mobs.updatemobs();
-
 }

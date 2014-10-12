@@ -75,8 +75,7 @@ function enemy(x, y){
     var self = this;
     self.x = x;
     self.y = y;
-    self.name = "Jake";
-    self.enemyspr = new sprite("grasstest.png", self.x, self.y, 40, 40, 1, 1, 0, false);
+    self.enemyspr = new sprite("moose_still.png", self.x, self.y, 35, 35, 2, 1, 0, false);
     self.updatemob = function(){
         for (s = 0; s < spells.length; s++){
             if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true ){
