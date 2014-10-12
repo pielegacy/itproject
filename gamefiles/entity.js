@@ -79,7 +79,8 @@ function enemy(x, y){
     self.enemyspr = new sprite("test_texture.png", self.x, self.y, 40, 40, 3, 2, 0, false);
     self.updatemob = function(){
         for (s = 0; s < spells.length; s++){
-            if (spells[s].cx < self.enemyspr.x + self.enemyspr.w && spells[s].cx > self.enemyspr.x && spells[s].cy < self.enemyspr.y + self.enemyspr.h && spells[s].cy > spells[s].y && spells[s].spellspr.active == true && self.enemyspr.active == true){
+            /*if (spells[s].cx < self.enemyspr.x + self.enemyspr.w && spells[s].cx > self.enemyspr.x && spells[s].cy < self.enemyspr.y + self.enemyspr.h && spells[s].cy > spells[s].y && spells[s].spellspr.active == true && self.enemyspr.active == true){*/
+            if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true ){
                 self.enemyspr.active = false;
                 spells[s].spellspr.active = false;
             }
