@@ -10,7 +10,7 @@ function mainchar(type, x, y){
 		self.f = 2;
 		self.l = 2;
 	}
-	self.c = new character("sprite_wiz.png", self.x, self.y, 45, 60, self.f, self.l, 1, false);
+	self.c = new character("sprite_wiz.png", self.x, self.y, 30, 40, self.f, self.l, 1, false);
 	self.c.speed = 5;
 	self.c.direction = "undef";
 	self.c.moving = true;
@@ -36,22 +36,22 @@ function mainchar(type, x, y){
 		}
         if (self.timer > 10 && self.c.active == true){
             if (38 in keysDown){
-                var thing = new spell("air", 1, self.c.spr.x + (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
+                var thing = new spell("air", 1, self.c.spr.x + (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (39 in keysDown){
-                var thing = new spell("air", 2, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
+                var thing = new spell("air", 2, self.c.spr.x+ (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (40 in keysDown){
-                var thing = new spell("air", 3, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
+                var thing = new spell("air", 3, self.c.spr.x+ (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (37 in keysDown){
-                var thing = new spell("air", 4, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
+                var thing = new spell("air", 4, self.c.spr.x+ (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
@@ -187,12 +187,15 @@ function spell(type, direction, x, y){
         if (self.hit == true){
             self.direction = 0;
             self.hitcounter ++;
-            if (self.hitcounter < 20){
-            self.spellspr.cf = 1;
+            if (self.hitcounter < 5){
+                self.spellspr.cf = 1;
+            }
+            else if (self.hitcounter < 10){
+                self.spellspr.cf = 2;
             }
             else {
                 self.spellspr.active = false;
-                self.hitcounter = 20;
+                self.hitcounter = 10;
             }
         }
         if (self.direction == 1){
@@ -223,7 +226,7 @@ function spell(type, direction, x, y){
             self.spellspr.x -= self.speed;
             self.spellspr.y -= self.speed;
         }
-        if (self.spellspr.x > 650 || self.spellspr.x < -50 || self.spellspr.y > 450 || self.spellspr.y < -50){
+        if (self.spellspr.x > 650 || self.spellspr.x < -50 || self.spellspr.y > 550 || self.spellspr.y < -50){
             self.spellspr.active = false;
         }
         self.spellspr.update();

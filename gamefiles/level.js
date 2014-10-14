@@ -9,7 +9,6 @@ function mobloader(maxamount){
     self.spawntype = 0;
     self.updatemobs = function(){
         counter ++;
-        document.getElementById("title").innerHTML =  self.aliveamount;
         if (self.amount > 0 && self.aliveamount <= 0){
             self.currentlevel += 1;
             self.maxamount = maxamount[self.currentlevel];
