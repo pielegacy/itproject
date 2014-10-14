@@ -36,22 +36,22 @@ function mainchar(type, x, y){
 		}
         if (self.timer > 10 && self.c.active == true){
             if (38 in keysDown){
-                var thing = new spell("air", 1, self.c.spr.x, self.c.spr.y);
+                var thing = new spell("air", 1, self.c.spr.x + (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (39 in keysDown){
-                var thing = new spell("air", 2, self.c.spr.x, self.c.spr.y);
+                var thing = new spell("air", 2, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (40 in keysDown){
-                var thing = new spell("air", 3, self.c.spr.x, self.c.spr.y);
+                var thing = new spell("air", 3, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
             if (37 in keysDown){
-                var thing = new spell("air", 4, self.c.spr.x, self.c.spr.y);
+                var thing = new spell("air", 4, self.c.spr.x+ (self.c.spr.w / 2), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
             }
@@ -136,7 +136,7 @@ function enemy(x, y, speed, health){
                 if (spells[s].direction == 4){
                     self.enemyspr.x -= spells[s].speed;
                 }
-                spells[s].spellspr.active = false;
+                spells[s].hit = true;
             }
         }
         if (self.enemyspr.active == true){
@@ -154,7 +154,8 @@ function enemy(x, y, speed, health){
             }
             
         }
-        if (self.health <= 0){
+        if (self.health <= 0 && self.enemyspr.active == true){
+            mobs.aliveamount -= 1;
             self.enemyspr.active = false;
         }
         self.enemyspr.x += self.dx;
@@ -177,10 +178,23 @@ function spell(type, direction, x, y){
     self.damage = 10;
     self.type = type;
     self.direction = direction;
-    self.spellspr = new sprite("grasstest.png", self.x, self.y, 40, 40, 1, 1, 0, false);
+    self.spellspr = new sprite("spell_airball.png", self.x, self.y, 15, 15, 2, 1, 0, false);
+    self.hit = false;
+    self.hitcounter = 0;
     self.updatespell = function(){
-        self.cx = self.spellspr.x + 20;
-        self.cy = self.spellspr.y + 20;
+        self.cx = self.spellspr.x + 7;
+        self.cy = self.spellspr.y + 7;
+        if (self.hit == true){
+            self.direction = 0;
+            self.hitcounter ++;
+            if (self.hitcounter < 20){
+            self.spellspr.cf = 1;
+            }
+            else {
+                self.spellspr.active = false;
+                self.hitcounter = 20;
+            }
+        }
         if (self.direction == 1){
             self.spellspr.y -= self.speed;
         }
