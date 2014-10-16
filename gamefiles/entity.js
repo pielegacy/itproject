@@ -9,7 +9,7 @@ function mainchar(type, x, y){
 	self.y = y;
     self.spellid = 1;
     self.typec = rInt(0,4);
-    self.type = "Fire";//types[self.typec];
+    self.type = types[self.typec];
     document.getElementById("title").innerHTML = self.type;
     currentype = self.type;
     self.timer = 0;
@@ -171,7 +171,7 @@ function enemy(x, y, speed, health){
             
         }
         if (self.knocked == true){
-            if (self.enemyspr.x == self.kx && self.enemyspr.y == self.ky){
+            if (self.enemyspr.x >= self.kx - 1 && self.enemyspr.x <= self.kx + 1 && self.enemyspr.y >= self.ky - 1 && self.enemyspr.y <= self.ky + 1) {
                 self.knocked = false; 
             }
             else {
@@ -220,16 +220,30 @@ function spell(type, direction, x, y){
             self.spellspr.cl = 0;
             self.speed = 14;
             self.damage = 5;
-            self.knock = 20;
+            self.knock = 15;
         }
-    }
-    if (currentype == "Fire"){
+        if (currentype == "Fire"){
             self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
             self.spellspr.cl = 1;
             self.speed = 10;
             self.damage = 10;
-            self.knock = 1;
+            self.knock = 8;
         }
+        if (currentype == "Earth"){
+            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
+            self.spellspr.cl = 2;
+            self.speed = 5;
+            self.damage = 15;
+            self.knock = 20;
+        }
+        if (currentype == "Water"){
+            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
+            self.spellspr.cl = 3;
+            self.speed = 8;
+            self.damage = 12;
+            self.knock = 10;
+        }
+    }
     self.hit = false;
     self.hitcounter = 0;
     self.updatespell = function(){
@@ -244,9 +258,15 @@ function spell(type, direction, x, y){
             else if (self.hitcounter < 10){
                 self.spellspr.cf = 2;
             }
+            else if (self.hitcounter < 15){
+                self.spellspr.cf = 3;
+            }
+            else if (self.hitcounter < 20){
+                self.spellspr.cf = 4;
+            }
             else {
                 self.spellspr.active = false;
-                self.hitcounter = 10;
+                self.hitcounter = 20;
             }
         }
         if (self.direction == 1){
