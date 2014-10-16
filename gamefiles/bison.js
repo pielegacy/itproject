@@ -7,7 +7,7 @@ function rInt(min, max) {
 }
 var c = document.getElementById("gamescreen");
 var ctx = c.getContext("2d");
-var bgcolor = "#000";
+var bgcolor = "#ccc";
 var keysDown = {};
 addEventListener("keydown", function (e) {
 	keysDown[e.keyCode] = true;
@@ -102,21 +102,21 @@ function character(src, x, y, w, h, f, l, a, loaded){
             self.moving = true;
             if (87 in keysDown || self.direction == "up"){
                 self.spr.y -= self.speed;
-                self.spr.cl = 1;
+                //self.spr.cl = 1;
             }
             if (83 in keysDown || self.direction == "down"){
                 self.spr.y += self.speed;
-                self.spr.cl = 1;
+                //self.spr.cl = 1;
             }
             if (65 in keysDown || self.direction == "left"){
                 self.spr.x -= self.speed;
                 self.moving = true;
-                self.spr.cl = 1;
+                //self.spr.cl = 1;
             }
             if (68 in keysDown || self.direction == "right"){
                 self.spr.x += self.speed;
                 self.moving = true;
-                self.spr.cl = 1;
+                //self.spr.cl = 1;
             }
             if (self.moving == false){
                 self.spr.cl = 0;

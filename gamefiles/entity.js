@@ -1,21 +1,29 @@
 var spells = [];
+var types = ["Air", "Water", "Earth", "Fire", "Poo"];
+var currentype;
+var currentspellid;
 function mainchar(type, x, y){
 	var self = this;
 	self.t = type;
 	self.x = x;
 	self.y = y;
+    self.spellid = 1;
+    self.typec = rInt(0,4);
+    self.type = "Air";//types[self.typec];
+    document.getElementById("title").innerHTML = self.type;
+    currentype = self.type;
     self.timer = 0;
 	self.action = 0;
 	if (self.t == 1){
 		self.f = 2;
 		self.l = 2;
 	}
-	self.c = new character("sprite_wiz.png", self.x, self.y, 30, 40, self.f, self.l, 1, false);
+	self.c = new character("genuine_wiz.png", self.x, self.y, 20, 30, self.f, self.l, 1, false);
 	self.c.speed = 5;
 	self.c.direction = "undef";
 	self.c.moving = true;
-    document.getElementById("title").innerHTML = spells.length;
 	self.updatechar = function(){
+        currentspellid = self.spellid;
 		self.c.update();
         for (i = 0; i < spells.length; i++){
             spells[i].updatespell();
@@ -122,8 +130,7 @@ function enemy(x, y, speed, health){
     self.enemyspr = new sprite("darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
     self.updatemob = function(){
         for (s = 0; s < spells.length; s++){
-            if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true && spells[s].spellspr.active){
-                self.health -= spells[s].damage;
+            if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true && spells[s].spellspr.active && spells[s].hit == false){
                 if (spells[s].direction == 1){
                     self.enemyspr.y -= spells[s].speed;
                 }
@@ -137,6 +144,7 @@ function enemy(x, y, speed, health){
                     self.enemyspr.x -= spells[s].speed;
                 }
                 spells[s].hit = true;
+                self.health -= spells[s].damage;
             }
         }
         if (self.enemyspr.active == true){
@@ -178,7 +186,20 @@ function spell(type, direction, x, y){
     self.damage = 10;
     self.type = type;
     self.direction = direction;
-    self.spellspr = new sprite("spell_airball.png", self.x, self.y, 15, 15, 2, 1, 0, false);
+    if (currentspellid == 1){
+        if (currentype == "Air"){
+            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
+            self.spellspr.cl = 0;
+            self.speed = 14;
+            self.damage = 5;
+        }
+    }
+    if (currentype == "Fire"){
+            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
+            self.spellspr.cl = 1;
+            self.speed = 10;
+            self.damage = 10;
+        }
     self.hit = false;
     self.hitcounter = 0;
     self.updatespell = function(){
