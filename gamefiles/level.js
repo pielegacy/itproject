@@ -8,6 +8,7 @@ function mobloader(maxamount){
     self.aliveamount = 0;
     self.spawntype = 0;
     self.updatemobs = function(){
+//Calder Likes Men//
         counter ++;
         if (self.amount > 0 && self.aliveamount <= 0){
             self.currentlevel += 1;
