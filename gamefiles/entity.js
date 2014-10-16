@@ -1,5 +1,5 @@
 var spells = [];
-var types = ["Air", "Water", "Earth", "Fire", "Poo"];
+var types = ["Air", "Water", "Earth", "Fire"];
 var currentype;
 var currentspellid;
 function mainchar(type, x, y){
@@ -9,7 +9,7 @@ function mainchar(type, x, y){
 	self.y = y;
     self.spellid = 1;
     self.typec = rInt(0,4);
-    self.type = "Air";//types[self.typec];
+    self.type = "Fire";//types[self.typec];
     document.getElementById("title").innerHTML = self.type;
     currentype = self.type;
     self.timer = 0;
@@ -125,6 +125,9 @@ function enemy(x, y, speed, health){
     self.cy = 0;
     self.dx = 0;
     self.dy = 0;
+    self.knocked = false;
+    self.kx = 0;
+    self.ky = 0;
     self.health = health;
     self.speed = speed;
     self.enemyspr = new sprite("darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
@@ -132,22 +135,27 @@ function enemy(x, y, speed, health){
         for (s = 0; s < spells.length; s++){
             if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true && spells[s].spellspr.active && spells[s].hit == false){
                 if (spells[s].direction == 1){
-                    self.enemyspr.y -= spells[s].speed;
+                    self.ky = self.enemyspr.y - spells[s].knock;
+                    self.kx = self.enemyspr.x;
                 }
                 if (spells[s].direction == 2){
-                    self.enemyspr.x += spells[s].speed;
+                    self.kx = self.enemyspr.x + spells[s].knock;
+                    self.ky = self.enemyspr.y;
                 }
                 if (spells[s].direction == 3){
-                    self.enemyspr.y += spells[s].speed;
+                    self.ky = self.enemyspr.y + spells[s].knock;
+                    self.kx = self.enemyspr.x;
                 }
                 if (spells[s].direction == 4){
-                    self.enemyspr.x -= spells[s].speed;
+                    self.kx = self.enemyspr.x - spells[s].knock;
+                    self.ky = self.enemyspr.y;
                 }
+                self.knocked = true;
                 spells[s].hit = true;
                 self.health -= spells[s].damage;
             }
         }
-        if (self.enemyspr.active == true){
+        if (self.enemyspr.active == true && self.knocked == false){
             if (wizard.x > self.enemyspr.x){
                 self.dx = self.speed;
             }
@@ -161,6 +169,25 @@ function enemy(x, y, speed, health){
                 self.dy = -1 * self.speed;
             }
             
+        }
+        if (self.knocked == true){
+            if (self.enemyspr.x == self.kx && self.enemyspr.y == self.ky){
+                self.knocked = false; 
+            }
+            else {
+                if (self.kx > self.enemyspr.x){
+                    self.dx = self.speed;
+                }
+                if (self.kx < self.enemyspr.x){
+                    self.dx = -1 * self.speed;
+                }
+                if (self.ky > self.enemyspr.y){
+                    self.dy = self.speed;
+                }
+                if (self.ky < self.enemyspr.y){
+                    self.dy = -1 * self.speed;
+                }
+            }
         }
         if (self.health <= 0 && self.enemyspr.active == true){
             mobs.aliveamount -= 1;
@@ -184,6 +211,7 @@ function spell(type, direction, x, y){
     self.cy;
     self.speed = 10;
     self.damage = 10;
+    self.knock = 0;
     self.type = type;
     self.direction = direction;
     if (currentspellid == 1){
@@ -192,6 +220,7 @@ function spell(type, direction, x, y){
             self.spellspr.cl = 0;
             self.speed = 14;
             self.damage = 5;
+            self.knock = 20;
         }
     }
     if (currentype == "Fire"){
@@ -199,6 +228,7 @@ function spell(type, direction, x, y){
             self.spellspr.cl = 1;
             self.speed = 10;
             self.damage = 10;
+            self.knock = 1;
         }
     self.hit = false;
     self.hitcounter = 0;
