@@ -1,4 +1,4 @@
-var wizard = new mainchar(1, 50, 370);
+var wizard = new mainchar(50, 370);
 var enemies = [];
 var enemysort = [1, 5, 10];
 var mobs = new mobloader(enemysort);
