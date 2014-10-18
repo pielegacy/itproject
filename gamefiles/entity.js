@@ -47,6 +47,12 @@ function mainchar(x, y){
 		if (self.x > 555){
 			self.c.spr.x = 555;
 		}
+        if (16 in keysDown){
+            self.c.speed = 6;
+        }
+        else {
+            self.c.speed = 3;
+        }
         if (self.timer > 10 && self.c.active == true && self.mana == 0){
             if (38 in keysDown){
                 var thing = new spell("air", 1, self.c.spr.x + (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
@@ -67,12 +73,6 @@ function mainchar(x, y){
                 var thing = new spell("air", 4, self.c.spr.x+ (self.c.spr.w / 4), self.c.spr.y+ (self.c.spr.h / 2));
                 spells.push(thing);
                 self.timer = 0;
-            }
-            if (16 in keysDown){
-                self.c.speed = 6;
-            }
-            else {
-                self.c.speed = 3;
             }
             ///////////////////////////////
             // TODO: Diagonally Shooting //
@@ -108,6 +108,7 @@ function mainchar(x, y){
                 spells.push(thing);
                 var thing = new spell("air", 4, self.c.spr.x, self.c.spr.y);
                 spells.push(thing);
+                self.mana = 200;
                 }
                 self.timer = 0;
                     
@@ -128,7 +129,7 @@ function rect(x, y, w, h, colour){
 		ctx.fillRect(self.x,self.y,self.w,self.h);
 	}
 }
-function enemy(x, y, speed, health){
+function enem(x, y, type){
     var self = this;
     self.x = x;
     self.y = y;
@@ -139,10 +140,20 @@ function enemy(x, y, speed, health){
     self.knocked = false;
     self.kx = 0;
     self.ky = 0;
-    self.health = health;
-    self.basespeed = speed;
-    self.speed = speed;
-    self.enemyspr = new sprite("darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
+    self.type = type;
+    if (self.type == 0){
+        self.enemyspr = new sprite("mobs/enem_darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
+        self.health = rInt(5,10);
+        self.basespeed = 3;
+        self.speed = self.basespeed;
+    }
+    if (self.type == 1){
+        self.enemyspr = new sprite("mobs/enem_havnn.png", self.x, self.y, 30, 35, 7, 1, 1, false);
+        self.health = rInt(20,30);
+        self.basespeed = 2;
+        self.enemyspr.fps = 4;
+        self.speed = self.basespeed;
+    }
     self.updatemob = function(){
         for (s = 0; s < spells.length; s++){
             if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true && spells[s].spellspr.active && spells[s].hit == false){
@@ -183,7 +194,7 @@ function enemy(x, y, speed, health){
             
         }
         if (self.knocked == true){
-            if (self.enemyspr.x >= self.kx - 2 && self.enemyspr.x <= self.kx + 2 && self.enemyspr.y >= self.ky - 2 && self.enemyspr.y <= self.ky + 2) {
+            if (self.enemyspr.x >= self.kx - 2 * self.basespeed && self.enemyspr.x <= self.kx + 2 * self.basespeed && self.enemyspr.y >= self.ky - 2 * self.basespeed && self.enemyspr.y <= self.ky + 2 * self.basespeed) {
                 self.knocked = false; 
             }
             else {
@@ -201,12 +212,16 @@ function enemy(x, y, speed, health){
                 }
             }
         }
-        if (self.enemyspr.x >= wizard.c.spr.x - 100 && self.enemyspr.x <= wizard.c.spr.x + 100 && self.enemyspr.y >= wizard.c.spr.y - 100 && self.enemyspr.y <= wizard.c.spr.y + 100) {
-                self.speed = self.basespeed * 2; 
+        
+        if (self.enemyspr.x >= wizard.c.spr.x - 100 && self.enemyspr.x <= wizard.c.spr.x + 100 && self.enemyspr.y >= wizard.c.spr.y - 100 && self.enemyspr.y <= wizard.c.spr.y + 100 && self.type == 1) {
+                self.speed = self.basespeed * 2;
+                self.enemyspr.fps = 2;
         }
         else {
             self.speed = self.basespeed;
+            self.enemyspr.fps = 4;
         }
+        
         if (self.enemyspr.x >= wizard.c.spr.x - 2 && self.enemyspr.x <= wizard.c.spr.x + 2 && self.enemyspr.y >= wizard.c.spr.y - 2 && self.enemyspr.y <= wizard.c.spr.y + 2) {
                 self.speed = 0; 
         }

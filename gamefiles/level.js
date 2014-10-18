@@ -22,16 +22,16 @@ function mobloader(maxamount){
             self.aliveamount += 1;
             self.amount += 1;
             if (self.spawntype == 1){
-                var t = new enemy(rInt(10, 400), rInt(-200, -50), rInt(1,3), rInt(10, 30));
+                var t = new enem(rInt(10, 400), rInt(-200, -50), rInt(0,2));
             }
             if (self.spawntype == 2){
-                var t = new enemy(rInt(650, 750), rInt(10,400), rInt(1,3), rInt(10, 30));
+                var t = new enem(rInt(650, 750), rInt(10,400), rInt(0,2));
             }
             if (self.spawntype == 3){
-                var t = new enemy(rInt(10, 400), rInt(550, 640), rInt(1,3), rInt(10, 30));
+                var t = new enem(rInt(10, 400), rInt(550, 640), rInt(0,2));
             }
             if (self.spawntype == 4){
-                var t = new enemy(rInt(-200, -50), rInt(10,400), rInt(1,3), rInt(10, 30));
+                var t = new enem(rInt(-200, -50), rInt(10,400), rInt(0,2));
             }
             enemies.push(t);
         }
