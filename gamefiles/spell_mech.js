@@ -8,6 +8,8 @@ function cast(id, direction){
     if (id == 1){
         var thing = new spell("cut", self.direction, wizard.c.spr.x + (wizard.c.spr.w / 4), wizard.c.spr.y+ (wizard.c.spr.h / 2));
     }
+    if (id == 100){
+    }
     spells.push(thing);
 }
 function spell(type, direction, x, y){
@@ -61,15 +63,13 @@ function spell(type, direction, x, y){
     self.updatespell = function(){
         self.cx = self.spellspr.x + 7;
         self.cy = self.spellspr.y + 7;
-        if (self.hit == false){
-            /*for (i = 0; i < 10; i++){
-                var p = new particle(0, self.cx + rInt(-10, 10), self.cy + rInt(-10, 10), 1);
-                particles.push(p);
-            }*/
-        }
         if (self.hit == true){
             if (self.type != "cut"){
                 self.direction = 0;
+            /*for (i = 0; i < 10; i++){
+                self.p = new particle(0, self.cx + rInt(-10, 10), self.cy + rInt(-10, 10), 1);
+                particles.push(self.p);
+            }*/
             }
             self.hitcounter ++;
             if (self.hitcounter < 5){

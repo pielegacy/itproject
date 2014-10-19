@@ -103,6 +103,7 @@ function mainchar(x, y){
                 var thing = new spell("norm", 3, self.c.spr.x, self.c.spr.y);
                 spells.push(thing);
                 var thing = new spell("norm", 4, self.c.spr.x, self.c.spr.y);
+                experience(self.x, self.y, 10);
                 spells.push(thing);
                 self.mana = 200;
                 }
@@ -136,11 +137,13 @@ function enem(x, y, type){
     self.knocked = false;
     self.kx = 0;
     self.ky = 0;
+    self.exp = 0;
     self.type = type;
     if (self.type == 0){
         self.enemyspr = new sprite("mobs/enem_darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
         self.health = rInt(5,10);
         self.basespeed = 3;
+        self.exp = 5;
         self.speed = self.basespeed;
     }
     if (self.type == 1){
@@ -148,6 +151,7 @@ function enem(x, y, type){
         self.health = rInt(20,30);
         self.basespeed = 2;
         self.enemyspr.fps = 4;
+        self.exp = 10;
         self.speed = self.basespeed;
     }
     self.updatemob = function(){
@@ -229,6 +233,8 @@ function enem(x, y, type){
         }
         if (self.health <= 0 && self.enemyspr.active == true){
             mobs.aliveamount -= 1;
+            experience(self.cx, self.cy, self.exp);
+            clot(self.cx, self.cy);
             self.enemyspr.active = false;
         }
         self.enemyspr.x += self.dx;
