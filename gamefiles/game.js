@@ -1,8 +1,9 @@
-var wizard = new mainchar(50, 370);
+var wizard = new mainchar(200,200);
 var enemies = [];
-var enemysort = [1, 5, 10];
+var enemysort = [0, 0, 0];
 var expbundle = [];
 var bloods = [];
+var waters = [];
 var mobs = new mobloader(enemysort);
 function updategame(){
     for (e = 0; e < expbundle.length; e++){
@@ -16,4 +17,8 @@ function updategame(){
     for (b = 0; b < bloods.length; b++){
         bloods[b].updateblood();
     }
+    for (w = 0; w < waters.length; w++){
+        waters[w].updatewater();
+    }
+    
 }

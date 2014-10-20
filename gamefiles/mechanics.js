@@ -47,7 +47,7 @@ function clot(x,y){
     self.y = y;
     self.size = rInt(10,100);
     for (b = 0; b < self.size; b ++){
-        var bld = new blood(self.x, self.y);
+        var bld = new blood(self.x, self.y, self.type);
         bloods.push(bld);
     }
 }
@@ -80,5 +80,43 @@ function blood(x,y){
             ctx.fillStyle = self.bloodset[self.bloodcolour];
             ctx.fillRect(self.x, self.y, self.size / 10, self.size / 10);
         }
+    }
+}
+function water(x,y,d){
+    var self = this;
+    self.x = x;
+    self.y = y;
+    self.d = d;
+    self.active = true;
+    self.size = rInt(10,20);
+    if (self.d == 1){
+        self.dx = rInt(-10,10);
+        self.dy = rInt(-10,-2);
+    }
+    if (self.d == 2){
+        self.dx = rInt(2,10);
+        self.dy = rInt(-10,10);
+    }
+    if (self.d == 3){
+        self.dx = rInt(-10,10);
+        self.dy = rInt(2,10);
+    }
+    if (self.d == 4){
+        self.dx = rInt(-10,-2);
+        self.dy = rInt(-10,10);
+    }
+    self.updatewater = function(){
+        self.size -= 0.5;
+        if (self.size <= 0 && self.active){
+            self.x += self.dx;
+            self.y += self.dy;
+            ctx.fillStyle = "#14249d";
+            ctx.fillRect(self.x, self.y, self.size, self.size);
+        }
+        if (self.size < 0){
+            self.size = 0;
+            self.active = false;
+        }
+            
     }
 }

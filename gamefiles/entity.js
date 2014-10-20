@@ -16,7 +16,7 @@ function mainchar(x, y){
 	self.action = 0;
 	self.c = new character("genuine_wiz.png", self.x, self.y, 20, 30, 2, 4, 1, false);
     self.c.spr.cl = self.typec;
-	self.c.speed = 5;
+	self.c.speed = 6;
 	self.c.direction = "undef";
 	self.c.moving = true;
 	self.updatechar = function(){
@@ -38,20 +38,14 @@ function mainchar(x, y){
 		if (self.y < 0){
 			self.c.spr.y = 0;
 		}
-		if (self.y > 440){
-			self.c.spr.y = 440;
+		if (self.y > 460){
+			self.c.spr.y = 460;
 		}
         if (self.x < 0){
 			self.c.spr.x = 0;
 		}
 		if (self.x > 555){
 			self.c.spr.x = 555;
-		}
-        if (16 in keysDown){
-            self.c.speed = 6;
-        }
-        else {
-            self.c.speed = 3;
         }
         if (self.timer > 10 && self.c.active == true && self.mana == 0){
             if (38 in keysDown){
@@ -103,7 +97,10 @@ function mainchar(x, y){
                 var thing = new spell("norm", 3, self.c.spr.x, self.c.spr.y);
                 spells.push(thing);
                 var thing = new spell("norm", 4, self.c.spr.x, self.c.spr.y);
-                experience(self.x, self.y, 10);
+                for (i = 0; i < 1000; i++){
+                    var w = new water(self.x, self.y, rInt(1,5));
+                    waters.push(w);
+                }
                 spells.push(thing);
                 self.mana = 200;
                 }
@@ -151,6 +148,13 @@ function enem(x, y, type){
         self.health = rInt(20,30);
         self.basespeed = 2;
         self.enemyspr.fps = 4;
+        self.exp = 10;
+        self.speed = self.basespeed;
+    }
+    if (self.type == 2){
+        self.enemyspr = new sprite("mobs/enem_ogre.png", self.x, self.y, 20, 30, 4, 1, 1, false);
+        self.health = rInt(5,10);
+        self.basespeed = 2;
         self.exp = 10;
         self.speed = self.basespeed;
     }
@@ -234,7 +238,12 @@ function enem(x, y, type){
         if (self.health <= 0 && self.enemyspr.active == true){
             mobs.aliveamount -= 1;
             experience(self.cx, self.cy, self.exp);
-            clot(self.cx, self.cy);
+            if (self.type == 2){
+                clot(self.cx, self.cy,1);
+            }
+            else {
+                clot(self.cx, self.cy,0);
+            }
             self.enemyspr.active = false;
         }
         self.enemyspr.x += self.dx;
