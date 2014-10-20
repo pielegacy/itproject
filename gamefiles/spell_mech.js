@@ -50,6 +50,10 @@ function spell(type, direction, x, y){
         }
         if (currentype == "Water"){
             self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
+            for (i = 0; i < 5; i++){
+                var w = new water(self.x, self.y, self.direction, 4);
+                waters.push(w);
+            }
             self.spellspr.cl = 3;
             self.speed = 8;
             self.damage = 12;
@@ -127,7 +131,9 @@ function spell(type, direction, x, y){
         if (self.spellspr.x > 650 || self.spellspr.x < -50 || self.spellspr.y > 550 || self.spellspr.y < -50){
             self.spellspr.active = false;
         }
-        self.spellspr.update();
+        if (currentype != "Water"){
+            self.spellspr.update();
+        }   
     }
 }
 

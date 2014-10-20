@@ -118,7 +118,7 @@ function water(x,y,d,s){
         }
         for (e = 0; e < enemies.length; e++){
             if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active){
-                enemies[e].health -= self.size * rInt(1,4);
+                enemies[e].health -= self.size;
                 self.active = false;
             }
         }
