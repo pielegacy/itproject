@@ -82,41 +82,51 @@ function blood(x,y){
         }
     }
 }
-function water(x,y,d){
+function water(x,y,d,s){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
+    self.s = s;
     self.active = true;
-    self.size = rInt(10,20);
+    self.size = rInt(5,10);
+    self.sizecount = self.size * 10;
     if (self.d == 1){
         self.dx = rInt(-10,10);
-        self.dy = rInt(-10,-2);
+        self.dy = rInt(-10,-2) * self.s;
     }
     if (self.d == 2){
-        self.dx = rInt(2,10);
+        self.dx = rInt(2,10) * self.s;
         self.dy = rInt(-10,10);
     }
     if (self.d == 3){
         self.dx = rInt(-10,10);
-        self.dy = rInt(2,10);
+        self.dy = rInt(2,10) * self.s;
     }
     if (self.d == 4){
-        self.dx = rInt(-10,-2);
+        self.dx = rInt(-10,-2) * self.s;
         self.dy = rInt(-10,10);
     }
     self.updatewater = function(){
-        self.size -= 0.5;
-        if (self.size <= 0 && self.active){
+        self.sizecount -= 1;
+        self.size = self.sizecount / 10;
+        if (self.active){
             self.x += self.dx;
             self.y += self.dy;
             ctx.fillStyle = "#14249d";
             ctx.fillRect(self.x, self.y, self.size, self.size);
         }
-        if (self.size < 0){
-            self.size = 0;
+        for (e = 0; e < enemies.length; e++){
+            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active){
+                enemies[e].health -= self.size * rInt(1,4);
+                self.active = false;
+            }
+        }
+        if (self.size < 1){
             self.active = false;
         }
-            
+        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+            self.active = false;
+        }
     }
 }

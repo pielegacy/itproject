@@ -50,6 +50,8 @@ function mainchar(x, y){
         if (self.timer > 10 && self.c.active == true && self.mana == 0){
             if (38 in keysDown){
                 cast(0,1);
+                var w = new water(self.x, self.y, rInt(1,5));
+                waters.push(w);
                 self.timer = 0;
             }
             if (39 in keysDown){
@@ -88,21 +90,11 @@ function mainchar(x, y){
                 spells.push(thing);
                 self.timer = 0;
             }*/
-            if (32 in keysDown){
-                for (i = 0; i < 10; i++){
-                var thing = new spell("norm", 1, self.c.spr.x, self.c.spr.y);
-                spells.push(thing);
-                var thing = new spell("norm", 2, self.c.spr.x, self.c.spr.y);
-                spells.push(thing);
-                var thing = new spell("norm", 3, self.c.spr.x, self.c.spr.y);
-                spells.push(thing);
-                var thing = new spell("norm", 4, self.c.spr.x, self.c.spr.y);
+            if (32 in keysDown && self.mana == 0){
+                self.mana = 100;
                 for (i = 0; i < 1000; i++){
-                    var w = new water(self.x, self.y, rInt(1,5));
+                    var w = new water(self.x, self.y, 2, rInt(4,10));
                     waters.push(w);
-                }
-                spells.push(thing);
-                self.mana = 200;
                 }
                 self.timer = 0;
                     
