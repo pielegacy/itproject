@@ -33,6 +33,7 @@ function expball(x,y){
             self.moving = false;
         }
         if (self.active && self.x <= wizard.x + 20 && self.x >= wizard.x && self.y <= wizard.y + 30 && self.y >= wizard.y){
+            wizard.experience += 1;
             self.active = false;
         }
         if (self.active){
@@ -82,43 +83,54 @@ function blood(x,y){
         }
     }
 }
-function water(x,y,d,s,dam){
+function water(x,y,d,s,dam,spread){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
     self.s = s;
     self.dam = dam;
+    self.sc = 2;
+    self.spreading = spread;
     self.active = true;
+    self.c = ["#14249d","#4e61f7","#4758d6"];
+    self.cc = rInt(0,self.c.length);
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-5,5);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-5,5);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     if (self.d == 3){
-        self.dx = rInt(-5,5);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-5,5);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
+    }
+    if (self.d == 5){
+        self.dx =rInt(-4,5) * self.s;
+        self.dy = rInt(-4,5) * self.s;
     }
     self.updatepart = function(){
-        self.sizecount -= 1;
+        self.sizecount -= self.sc;
         self.size = self.sizecount / 10;
         if (self.active){
             self.x += self.dx;
             self.y += self.dy;
-            ctx.fillStyle = "#14249d";
+            ctx.fillStyle = self.c[self.cc];
             ctx.fillRect(self.x, self.y, self.size, self.size);
         }
         for (e = 0; e < enemies.length; e++){
             if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].kx = enemies[e].enemyspr.x + self.dx * (self.dam/2);
+                enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
+                enemies[e].knocked = true;
                 enemies[e].health -= self.dam;
                 self.active = false;
             }
@@ -138,7 +150,10 @@ function fire(x,y,d,s,dam){
     self.d = d;
     self.s = s;
     self.dam = dam;
+    self.sc = 1;
     self.active = true;
+    self.c = ["#f82f2f","#e53c1d","#fd0404"];
+    self.cc = rInt(0,self.c.length);
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
@@ -158,16 +173,19 @@ function fire(x,y,d,s,dam){
         self.dy = rInt(-2,2);
     }
     self.updatepart = function(){
-        self.sizecount -= 1;
+        self.sizecount -= self.sc;
         self.size = self.sizecount / 10;
         if (self.active){
             self.x += self.dx;
             self.y += self.dy;
-            ctx.fillStyle = "#f82f2f";
+            ctx.fillStyle = self.c[self.cc];
             ctx.fillRect(self.x, self.y, self.size, self.size);
         }
         for (e = 0; e < enemies.length; e++){
             if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].kx = enemies[e].enemyspr.x + self.dx * (self.dam/2);
+                enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
+                enemies[e].knocked = true;
                 enemies[e].health -= self.dam;
                 self.active = false;
             }
@@ -188,30 +206,33 @@ function air(x,y,d,s,dam){
     self.s = s;
     self.dam = dam;
     self.active = true;
+    self.cuts = false;
     self.size = rInt(2,5);
+    self.c = ["#e5e5e5","#fff","#efefef"];
+    self.cc = rInt(0,self.c.length);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-1,1);
+        self.dx = rInt(-2,2);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-1,1);
+        self.dy = rInt(-2,2);
     }
     if (self.d == 3){
-        self.dx = rInt(-1,1);
+        self.dx = rInt(-2,2);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-1,1);
+        self.dy = rInt(-2,2);
     }
     self.updatepart = function(){
         self.size = self.sizecount / 10;
         if (self.active){
             self.x += self.dx;
             self.y += self.dy;
-            ctx.fillStyle = "#fff";
+            ctx.fillStyle = self.c[self.cc];
             if (self.d == 1 || self.d == 3){
                 ctx.fillRect(self.x, self.y, self.size, self.size * rInt(7,10));
             }
@@ -221,8 +242,13 @@ function air(x,y,d,s,dam){
         }
         for (e = 0; e < enemies.length; e++){
             if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].kx = enemies[e].enemyspr.x + self.dx * (self.dam/2);
+                enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
+                enemies[e].knocked = true;
                 enemies[e].health -= self.dam;
-                self.active = false;
+                if (self.cuts == false){
+                    self.active = false;
+                }
             }
         }
         if (self.size < 1){
@@ -244,20 +270,20 @@ function earth(x,y,d,s,dam){
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1,2);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1,2);
     }
     if (self.d == 3){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1,2);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1,2);
     }
     self.updatepart = function(){
         //self.size = self.sizecount / 10;
@@ -269,6 +295,9 @@ function earth(x,y,d,s,dam){
         }
         for (e = 0; e < enemies.length; e++){
             if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].kx = enemies[e].enemyspr.x + self.dx * (self.dam/2);
+                enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
+                enemies[e].knocked = true;
                 enemies[e].health -= self.dam;
                 self.active = false;
             }

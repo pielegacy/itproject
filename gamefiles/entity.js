@@ -8,6 +8,7 @@ function mainchar(x, y){
 	self.y = y;
     self.mana = 0;
     self.spellid = 1;
+    self.experience = 0;
     self.typec = rInt(0,4);
     self.type = types[self.typec];
     document.getElementById("title").innerHTML = self.type;
@@ -20,11 +21,15 @@ function mainchar(x, y){
 	self.c.direction = "undef";
 	self.c.moving = true;
 	self.updatechar = function(){
+        document.getElementById("title").innerHTML = self.experience;
         currentspellid = self.spellid;
 		self.c.update();
         self.mana -= 1;
         if (self.mana <= 0){
             self.mana = 0;
+        }
+        if (self.experience > 10){
+            self.spellid = 2;
         }
         ctx.fillStyle = '#262626';
         ctx.font = '15px Arial';
@@ -35,8 +40,8 @@ function mainchar(x, y){
         }
 		self.x = self.c.spr.x;
 		self.y = self.c.spr.y;
-		if (self.y < 0){
-			self.c.spr.y = 0;
+		if (self.y < 10){
+			self.c.spr.y = 10;
 		}
 		if (self.y > 460){
 			self.c.spr.y = 460;
@@ -44,10 +49,10 @@ function mainchar(x, y){
         if (self.x < 0){
 			self.c.spr.x = 0;
 		}
-		if (self.x > 555){
-			self.c.spr.x = 555;
+		if (self.x > 570){
+			self.c.spr.x = 570;
         }
-        if (self.timer > 10 && self.c.active == true && self.mana == 0){
+        if (self.c.active == true && self.mana == 0){
             if (38 in keysDown){
                 cast(0,1);
                 self.timer = 0;
