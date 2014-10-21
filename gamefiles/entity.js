@@ -50,8 +50,6 @@ function mainchar(x, y){
         if (self.timer > 10 && self.c.active == true && self.mana == 0){
             if (38 in keysDown){
                 cast(0,1);
-                var w = new water(self.x, self.y, rInt(1,5));
-                waters.push(w);
                 self.timer = 0;
             }
             if (39 in keysDown){
@@ -130,7 +128,7 @@ function enem(x, y, type){
     self.type = type;
     if (self.type == 0){
         self.enemyspr = new sprite("mobs/enem_darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
-        self.health = rInt(5,10);
+        self.health = rInt(15,20);
         self.basespeed = 3;
         self.exp = 5;
         self.speed = self.basespeed;
@@ -145,7 +143,7 @@ function enem(x, y, type){
     }
     if (self.type == 2){
         self.enemyspr = new sprite("mobs/enem_ogre.png", self.x, self.y, 20, 30, 4, 1, 1, false);
-        self.health = rInt(5,10);
+        self.health = rInt(7,15);
         self.basespeed = 2;
         self.exp = 10;
         self.speed = self.basespeed;

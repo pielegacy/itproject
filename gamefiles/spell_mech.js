@@ -25,115 +25,48 @@ function spell(type, direction, x, y){
     self.direction = direction;
     if (currentspellid == 1){
         if (currentype == "Air"){
-            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
-            self.spellspr.cl = 0;
-            self.speed = 14;
+            self.speed = 20;
             self.damage = 5;
             self.knock = 15;
             wizard.mana += 10;
+            var w = new air(self.x, self.y, self.direction, self.speed, self.damage);
+            parts.push(w);
         }
         if (currentype == "Fire"){
-            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
-            self.spellspr.cl = 1;
-            self.speed = 10;
+            self.speed = 15;
             self.damage = 10;
             self.knock = 8;
             wizard.mana += 20;
+            for (i = 0; i < 10; i++){
+                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage);
+                parts.push(w);
+            }
         }
         if (currentype == "Earth"){
-            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
-            self.spellspr.cl = 2;
-            self.speed = 5;
+            self.speed = 8;
             self.damage = 15;
             self.knock = 20;
             wizard.mana += 30;
+            for (i = 0; i < 5; i++){
+                var w = new earth(self.x, self.y, self.direction, self.speed, self.damage);
+                parts.push(w);
+            }
         }
         if (currentype == "Water"){
-            self.spellspr = new sprite("spells_1.png", self.x, self.y, 15, 15, 2, 2, 0, false);
-            for (i = 0; i < 5; i++){
-                var w = new water(self.x, self.y, self.direction, 4);
-                waters.push(w);
-            }
-            self.spellspr.cl = 3;
-            self.speed = 8;
-            self.damage = 12;
+            self.speed = 12;
+            self.damage = 4;
             self.knock = 10;
             wizard.mana += 20;
+            for (i = 0; i < 5; i++){
+                var w = new water(self.x, self.y, self.direction, self.speed, self.damage);
+                parts.push(w);
+            }
         }
     }
     
     self.hit = false;
     self.hitcounter = 0;
     self.updatespell = function(){
-        self.cx = self.spellspr.x + 7;
-        self.cy = self.spellspr.y + 7;
-        if (self.hit == true){
-            if (self.type != "cut"){
-                self.direction = 0;
-            /*for (i = 0; i < 10; i++){
-                self.p = new particle(0, self.cx + rInt(-10, 10), self.cy + rInt(-10, 10), 1);
-                particles.push(self.p);
-            }*/
-            }
-            self.hitcounter ++;
-            if (self.hitcounter < 5){
-                self.spellspr.cf = 1;
-            }
-            else if (self.hitcounter < 10){
-                self.spellspr.cf = 2;
-            }
-            else if (self.hitcounter < 15){
-                self.spellspr.cf = 3;
-            }
-            else if (self.hitcounter < 20){
-                self.spellspr.cf = 4;
-            }
-            else {
-                if (self.type != "cut"){
-                    self.spellspr.active = false;
-                    self.hitcounter = 20;
-                }
-                else {
-                    self.hit = false;
-                    self.hitcounter = 0;
-                    self.cf = 0;
-                }
-            }
-        }
-        if (self.direction == 1){
-            self.spellspr.y -= self.speed;
-        }
-        if (self.direction == 2){
-            self.spellspr.x += self.speed;
-        }
-        if (self.direction == 3){
-            self.spellspr.y += self.speed;
-        }
-        if (self.direction == 4){
-            self.spellspr.x -= self.speed;
-        }
-        if (self.direction == 5){
-            self.spellspr.y -= self.speed;
-            self.spellspr.x += self.speed;
-        }
-        if (self.direction == 6){
-            self.spellspr.x += self.speed;
-            self.spellspr.y += self.speed;
-        }
-        if (self.direction == 7){
-            self.spellspr.y += self.speed;
-            self.spellspr.x -= self.speed;
-        }
-        if (self.direction == 8){
-            self.spellspr.x -= self.speed;
-            self.spellspr.y -= self.speed;
-        }
-        if (self.spellspr.x > 650 || self.spellspr.x < -50 || self.spellspr.y > 550 || self.spellspr.y < -50){
-            self.spellspr.active = false;
-        }
-        if (currentype != "Water"){
-            self.spellspr.update();
-        }   
     }
 }
 

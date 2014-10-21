@@ -82,32 +82,33 @@ function blood(x,y){
         }
     }
 }
-function water(x,y,d,s){
+function water(x,y,d,s,dam){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
     self.s = s;
+    self.dam = dam;
     self.active = true;
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-10,10);
-        self.dy = rInt(-10,-2) * self.s;
+        self.dx = rInt(-5,5);
+        self.dy = -1 * self.s;
     }
     if (self.d == 2){
-        self.dx = rInt(2,10) * self.s;
-        self.dy = rInt(-10,10);
+        self.dx = self.s;
+        self.dy = rInt(-5,5);
     }
     if (self.d == 3){
-        self.dx = rInt(-10,10);
-        self.dy = rInt(2,10) * self.s;
+        self.dx = rInt(-5,5);
+        self.dy = self.s;
     }
     if (self.d == 4){
-        self.dx = rInt(-10,-2) * self.s;
-        self.dy = rInt(-10,10);
+        self.dx = -1 * self.s;
+        self.dy = rInt(-5,5);
     }
-    self.updatewater = function(){
+    self.updatepart = function(){
         self.sizecount -= 1;
         self.size = self.sizecount / 10;
         if (self.active){
@@ -117,8 +118,158 @@ function water(x,y,d,s){
             ctx.fillRect(self.x, self.y, self.size, self.size);
         }
         for (e = 0; e < enemies.length; e++){
-            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active){
-                enemies[e].health -= self.size;
+            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].health -= self.dam;
+                self.active = false;
+            }
+        }
+        if (self.size < 1){
+            self.active = false;
+        }
+        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+            self.active = false;
+        }
+    }
+}
+function fire(x,y,d,s,dam){
+    var self = this;
+    self.x = x;
+    self.y = y;
+    self.d = d;
+    self.s = s;
+    self.dam = dam;
+    self.active = true;
+    self.size = rInt(5,10);
+    self.sizecount = self.size * 10;
+    if (self.d == 1){
+        self.dx = rInt(-2,2);
+        self.dy = -1 * self.s;
+    }
+    if (self.d == 2){
+        self.dx = self.s;
+        self.dy = rInt(-2,2);
+    }
+    if (self.d == 3){
+        self.dx = rInt(-2,2);
+        self.dy = self.s;
+    }
+    if (self.d == 4){
+        self.dx = -1 * self.s;
+        self.dy = rInt(-2,2);
+    }
+    self.updatepart = function(){
+        self.sizecount -= 1;
+        self.size = self.sizecount / 10;
+        if (self.active){
+            self.x += self.dx;
+            self.y += self.dy;
+            ctx.fillStyle = "#f82f2f";
+            ctx.fillRect(self.x, self.y, self.size, self.size);
+        }
+        for (e = 0; e < enemies.length; e++){
+            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].health -= self.dam;
+                self.active = false;
+            }
+        }
+        if (self.size < 1){
+            self.active = false;
+        }
+        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+            self.active = false;
+        }
+    }
+}
+function air(x,y,d,s,dam){
+    var self = this;
+    self.x = x;
+    self.y = y;
+    self.d = d;
+    self.s = s;
+    self.dam = dam;
+    self.active = true;
+    self.size = rInt(2,5);
+    self.sizecount = self.size * 10;
+    if (self.d == 1){
+        self.dx = rInt(-1,1);
+        self.dy = -1 * self.s;
+    }
+    if (self.d == 2){
+        self.dx = self.s;
+        self.dy = rInt(-1,1);
+    }
+    if (self.d == 3){
+        self.dx = rInt(-1,1);
+        self.dy = self.s;
+    }
+    if (self.d == 4){
+        self.dx = -1 * self.s;
+        self.dy = rInt(-1,1);
+    }
+    self.updatepart = function(){
+        self.size = self.sizecount / 10;
+        if (self.active){
+            self.x += self.dx;
+            self.y += self.dy;
+            ctx.fillStyle = "#fff";
+            if (self.d == 1 || self.d == 3){
+                ctx.fillRect(self.x, self.y, self.size, self.size * rInt(7,10));
+            }
+            if (self.d == 2 || self.d == 4){
+                ctx.fillRect(self.x, self.y, self.size * rInt(7,10), self.size);
+            }
+        }
+        for (e = 0; e < enemies.length; e++){
+            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].health -= self.dam;
+                self.active = false;
+            }
+        }
+        if (self.size < 1){
+            self.active = false;
+        }
+        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+            self.active = false;
+        }
+    }
+}
+function earth(x,y,d,s,dam){
+    var self = this;
+    self.x = x;
+    self.y = y;
+    self.d = d;
+    self.s = s;
+    self.dam = dam;
+    self.active = true;
+    self.size = rInt(5,10);
+    self.sizecount = self.size * 10;
+    if (self.d == 1){
+        self.dx = rInt(-2,2);
+        self.dy = -1 * self.s;
+    }
+    if (self.d == 2){
+        self.dx = self.s;
+        self.dy = rInt(-2,2);
+    }
+    if (self.d == 3){
+        self.dx = rInt(-2,2);
+        self.dy = self.s;
+    }
+    if (self.d == 4){
+        self.dx = -1 * self.s;
+        self.dy = rInt(-2,2);
+    }
+    self.updatepart = function(){
+        //self.size = self.sizecount / 10;
+        if (self.active){
+            self.x += self.dx;
+            self.y += self.dy;
+            ctx.fillStyle = "#290808";
+            ctx.fillRect(self.x, self.y, self.size, self.size);
+        }
+        for (e = 0; e < enemies.length; e++){
+            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
+                enemies[e].health -= self.dam;
                 self.active = false;
             }
         }
