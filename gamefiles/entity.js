@@ -21,7 +21,6 @@ function mainchar(x, y){
 	self.c.direction = "undef";
 	self.c.moving = true;
 	self.updatechar = function(){
-        document.getElementById("title").innerHTML = self.experience;
         currentspellid = self.spellid;
 		self.c.update();
         self.mana -= 1;
@@ -43,14 +42,14 @@ function mainchar(x, y){
 		if (self.y < 10){
 			self.c.spr.y = 10;
 		}
-		if (self.y > 460){
-			self.c.spr.y = 460;
+		if (self.y > 660){
+			self.c.spr.y = 660;
 		}
-        if (self.x < 0){
-			self.c.spr.x = 0;
+        if (self.x < 10){
+			self.c.spr.x = 10;
 		}
-		if (self.x > 570){
-			self.c.spr.x = 570;
+		if (self.x > 970){
+			self.c.spr.x = 970;
         }
         if (self.c.active == true && self.mana == 0){
             if (38 in keysDown){
@@ -129,8 +128,10 @@ function enem(x, y, type){
     self.knocked = false;
     self.kx = 0;
     self.ky = 0;
+    self.attitude = "norm";
     self.exp = 0;
     self.type = type;
+    var choice = rInt(0,100);
     if (self.type == 0){
         self.enemyspr = new sprite("mobs/enem_darkshade.png", self.x, self.y, 20, 30, 2, 1, 1, false);
         self.health = rInt(15,20);
@@ -150,33 +151,48 @@ function enem(x, y, type){
         self.enemyspr = new sprite("mobs/enem_ogre.png", self.x, self.y, 20, 30, 4, 1, 1, false);
         self.health = rInt(7,15);
         self.basespeed = 2;
+        self.attitude = "scared";
         self.exp = 10;
         self.speed = self.basespeed;
     }
     self.updatemob = function(){
-        for (s = 0; s < spells.length; s++){
-            if (spells[s].cy >= self.enemyspr.y && spells[s].cy <= self.enemyspr.y + self.enemyspr.h && spells[s].cx <= self.enemyspr.x + self.enemyspr.w && spells[s].cx >= self.enemyspr.x && self.enemyspr.active == true && spells[s].spellspr.active && spells[s].hit == false){
-                if (spells[s].direction == 1){
-                    self.ky = self.enemyspr.y - spells[s].knock;
-                    self.kx = self.enemyspr.x;
+        //Experimental Dodging//
+        /*for (s = 0; s < parts.length; s++){
+            if (parts[s].y >= self.enemyspr.y - 250 && parts[s].y <= self.enemyspr.y + self.enemyspr.h + 250 && parts[s].x <= self.enemyspr.x + self.enemyspr.w + 250 && parts[s].x >= self.enemyspr.x - 250  && self.enemyspr.active == true && parts[s].active){
+                if (parts[s].d == 1){
+                    if (choice >= 50){
+                        self.enemyspr.x -= 2;
+                    }
+                    if (choice < 50){
+                        self.enemyspr.x += 2;
+                    }
                 }
-                if (spells[s].direction == 2){
-                    self.kx = self.enemyspr.x + spells[s].knock;
-                    self.ky = self.enemyspr.y;
+                if (parts[s].d == 2){
+                     if (choice >= 50){
+                        self.enemyspr.y -= 2;
+                    }
+                    if (choice < 50){
+                        self.enemyspr.y += 2;
+                    }
                 }
-                if (spells[s].direction == 3){
-                    self.ky = self.enemyspr.y + spells[s].knock;
-                    self.kx = self.enemyspr.x;
+                if (parts[s].d == 3){
+                    if (choice >= 50){
+                        self.enemyspr.x -= 2;
+                    }
+                    if (choice < 50){
+                        self.enemyspr.x += 2;
+                    }
                 }
-                if (spells[s].direction == 4){
-                    self.kx = self.enemyspr.x - spells[s].knock;
-                    self.ky = self.enemyspr.y;
+                if (parts[s].d == 4){
+                    if (choice >= 50){
+                        self.enemyspr.y -= 2;
+                    }
+                    if (choice < 50){
+                        self.enemyspr.y += 2;
+                    }
                 }
-                self.knocked = true;
-                spells[s].hit = true;
-                self.health -= spells[s].damage;
             }
-        }
+        }*/
         if (self.enemyspr.active == true && self.knocked == false){
             if (wizard.x > self.enemyspr.x){
                 self.dx = self.speed;

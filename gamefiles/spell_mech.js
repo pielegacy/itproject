@@ -89,12 +89,12 @@ function spell(type, direction, x, y){
             }
         }
         if (currentype == "Earth"){
-            self.speed = 8;
-            self.damage = 4;
+            self.speed = 7;
+            self.damage = 3;
             self.knock = 20;
             wizard.mana += 40;
-            for (i = 0; i < rInt(20,40); i++){
-                var w = new earth(self.x+ rInt(-40,40), self.y+ rInt(-40,40), self.direction, self.speed + rInt(-2,3), self.damage);
+            for (i = 0; i < 20; i++){
+                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage);
                 parts.push(w);
             }
         }

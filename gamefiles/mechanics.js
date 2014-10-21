@@ -32,7 +32,21 @@ function expball(x,y){
         if (self.x < self.x + 3 && self.x > self.x - 3 && self.y > self.y + 2){
             self.moving = false;
         }
-        if (self.active && self.x <= wizard.x + 20 && self.x >= wizard.x && self.y <= wizard.y + 30 && self.y >= wizard.y){
+        if (self.active && self.x <= wizard.c.spr.x + 70 && self.x >=  wizard.c.spr.x - 70 && self.y <= wizard.c.spr.y + 80 && self.y >= wizard.c.spr.y - 50){
+            if (self.x > wizard.c.spr.x){
+                self.x -= 5;
+            }
+            if (self.x < wizard.c.spr.x){
+                self.x += 5;
+            }
+            if (self.y > wizard.c.spr.y){
+                self.y -= 5;
+            }
+            if (self.y < wizard.c.spr.y){
+                self.y += 5;
+            }
+        }
+        if (self.active && self.x <=  wizard.c.spr.x + 20 && self.x >= wizard.c.spr.x && self.y <= wizard.c.spr.y + 30 && self.y >= wizard.c.spr.y){
             wizard.experience += 1;
             self.active = false;
         }
@@ -138,7 +152,7 @@ function water(x,y,d,s,dam,spread){
         if (self.size < 1){
             self.active = false;
         }
-        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
             self.active = false;
         }
     }
@@ -193,7 +207,7 @@ function fire(x,y,d,s,dam){
         if (self.size < 1){
             self.active = false;
         }
-        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
             self.active = false;
         }
     }
@@ -254,7 +268,7 @@ function air(x,y,d,s,dam){
         if (self.size < 1){
             self.active = false;
         }
-        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
             self.active = false;
         }
     }
@@ -305,7 +319,7 @@ function earth(x,y,d,s,dam){
         if (self.size < 1){
             self.active = false;
         }
-        if (self.x > 700 || self.x < -100 || self.y > 600 || self.y < -100){
+        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
             self.active = false;
         }
     }

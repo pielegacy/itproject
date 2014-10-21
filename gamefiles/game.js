@@ -7,7 +7,6 @@ var parts = [];
 var wateronscreen = false;
 var mobs = new mobloader(enemysort);
 function updategame(){
-    document.getElementById("title").innerHTML = parts.length;
     for (e = 0; e < expbundle.length; e++){
         expbundle[e].updateexp();
     }
