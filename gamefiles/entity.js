@@ -12,7 +12,6 @@ function mainchar(x, y){
     self.experience = 0;
     self.typec = rInt(0,4);
     self.type = types[self.typec];
-    document.getElementById("title").innerHTML = self.type;
     currentype = self.type;
     self.timer = 0;
 	self.action = 0;

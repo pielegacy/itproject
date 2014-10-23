@@ -9,9 +9,9 @@ function mobloader(){
     self.aliveamount = 0;
     self.spawntype = 0;
     self.mobrange = 3;
+    self.timer = 200;
     self.updatemobs = function(){
 //Calder Likes Men//
-        document.getElementById("title").innerHTML = "Level " + self.currentlevel;
         counter ++;
         if (self.currentlevel > 2){
             self.mobrange = rInt(0,3);
@@ -19,6 +19,7 @@ function mobloader(){
                 self.mobrange = 2;
         }
         if (self.amount > 0 && self.aliveamount <= 0){
+            self.timer = 200;
             self.currentlevel += 1;
             self.objective = 0;
             if (self.objective == 0){
@@ -48,6 +49,16 @@ function mobloader(){
         }
         for (l = 0; l < enemies.length; l++){
             enemies[l].updatemob();
+        }
+        self.timer -= 1;
+        if (self.timer < 0){
+            self.timer = 0;
+        }
+        if (self.timer > 0){
+            ctx.fillStyle = '#262626';
+            ctx.font = '30px Comic Sans MS';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText("Round " + self.currentlevel,450,70);
         }
     }
 }
