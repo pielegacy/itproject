@@ -7,7 +7,7 @@ function mainchar(x, y){
 	self.x = x;
 	self.y = y;
     self.mana = 0;
-    self.spellid = 1;
+    self.spellid = 3;
     self.experience = 0;
     self.typec = rInt(0,4);
     self.type = types[self.typec];
@@ -27,9 +27,9 @@ function mainchar(x, y){
         if (self.mana <= 0){
             self.mana = 0;
         }
-        if (self.experience > 10){
-            self.spellid = 2;
-        }
+        /*if (self.experience > 10){
+            self.spellid = 3;
+        }*/
         ctx.fillStyle = '#262626';
         ctx.font = '15px Arial';
         ctx.textBaseline = 'bottom';
