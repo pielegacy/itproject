@@ -15,7 +15,7 @@ function mainchar(x, y){
     currentype = self.type;
     self.timer = 0;
 	self.action = 0;
-	self.c = new character("genuine_wiz.png", self.x, self.y, 20, 30, 2, 4, 1, false);
+	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 4, 1, false);
     self.c.spr.cl = self.typec;
 	self.c.speed = 6;
 	self.c.direction = "undef";
