@@ -30,7 +30,7 @@ function spell(type, direction, x, y){
             self.knock = 15;
             wizard.mana += 10;
             for (i = 0; i < 3; i++){
-                var w = new air(self.x, self.y, self.direction, self.speed, self.damage);
+                var w = new air(self.x, self.y, self.direction, self.speed, self.damage,2);
             }
             parts.push(w);
         }
@@ -40,7 +40,7 @@ function spell(type, direction, x, y){
             self.knock = 8;
             wizard.mana += 20;
             for (i = 0; i < 3; i++){
-                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage);
+                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage,3);
                 parts.push(w);
             }
         }
@@ -50,7 +50,7 @@ function spell(type, direction, x, y){
             self.knock = 20;
             wizard.mana += 30;
             for (i = 0; i < rInt(3,5); i++){
-                var w = new earth(self.x, self.y, self.direction, self.speed, self.damage);
+                var w = new earth(self.x, self.y, self.direction, self.speed, self.damage,2);
                 parts.push(w);
             }
         }
@@ -72,7 +72,7 @@ function spell(type, direction, x, y){
             self.knock = rInt(30,40);
             wizard.mana += 2;
             for (i = 0; i < 10; i++){
-                var w = new air(self.x + rInt(-5,5), self.y+ rInt(-5,5), self.direction, self.speed, self.damage);
+                var w = new air(self.x + rInt(-5,5), self.y+ rInt(-5,5), self.direction, self.speed, self.damage,2);
                 w.cuts = true;
             }
             parts.push(w);
@@ -83,7 +83,7 @@ function spell(type, direction, x, y){
             self.knock = 8;
             wizard.mana += 1;
             for (i = 0; i < 1; i++){
-                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage);
+                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage,3);
                 w.sc = 3;
                 parts.push(w);
             }
@@ -94,7 +94,7 @@ function spell(type, direction, x, y){
             self.knock = 20;
             wizard.mana += 40;
             for (i = 0; i < 20; i++){
-                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage);
+                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage,2);
                 parts.push(w);
             }
         }
@@ -122,7 +122,7 @@ function spell(type, direction, x, y){
             self.knock = rInt(30,40);
             wizard.mana += 2;
             for (i = 0; i < 15; i++){
-                var w = new air(self.x + rInt(-10,10), self.y+ rInt(-10,10), self.direction, self.speed, self.damage);
+                var w = new air(self.x + rInt(-10,10), self.y+ rInt(-10,10), self.direction, self.speed, self.damage,2);
                 w.cuts = true;
             }
             parts.push(w);
@@ -134,26 +134,28 @@ function spell(type, direction, x, y){
             wizard.mana += 40;
             for (i = 0; i < 100; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new fire(self.x + rInt(-30,30), self.y + rInt(-40,40), self.direction, self.speed, self.damage);
+                    var w = new fire(self.x + rInt(-30,30), self.y + rInt(-40,40), self.direction, self.speed, self.damage,3);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new fire(self.x + rInt(-40,40), self.y + rInt(-30,30), self.direction, self.speed, self.damage);
+                    var w = new fire(self.x + rInt(-40,40), self.y + rInt(-30,30), self.direction, self.speed, self.damage,3);
                 }
                 w.sc = 3;
                 parts.push(w);
             }
         }
         if (currentype == "Earth"){
-            self.speed = 3;
+            self.speed = 5;
             self.damage = 3;
             self.knock = 20;
             wizard.mana += 20;
-            for (i = 0; i < 200; i++){
+            for (i = 0; i < 50; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new earth(self.x + rInt(-10,10), self.y + rInt(-20,20), self.direction, self.speed, self.damage);
+                    var w = new earth(self.x + rInt(-10,10), self.y + rInt(-20,20), self.direction, self.speed, self.damage,10);
+                    w.spreading = 0;
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new earth(self.x + rInt(-20,20), self.y + rInt(-10,10), self.direction, self.speed, self.damage);
+                    var w = new earth(self.x + rInt(-20,20), self.y + rInt(-10,10), self.direction, self.speed, self.damage,10);
+                    w.spreading = 0;
                 }
                 parts.push(w);
             }
@@ -182,7 +184,7 @@ function spell(type, direction, x, y){
             self.knock = rInt(30,40);
             wizard.mana += 2;
             for (i = 0; i < 15; i++){
-                var w = new air(self.x + rInt(-10,10), self.y+ rInt(-10,10), self.direction, self.speed, self.damage);
+                var w = new air(self.x + rInt(-10,10), self.y+ rInt(-10,10), self.direction, self.speed, self.damage,2);
                 w.cuts = true;
             }
             parts.push(w);
@@ -194,10 +196,10 @@ function spell(type, direction, x, y){
             wizard.mana += 40;
             for (i = 0; i < 100; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new fire(self.x + rInt(-30,30), self.y + rInt(-40,40), self.direction, self.speed, self.damage);
+                    var w = new fire(self.x + rInt(-30,30), self.y + rInt(-40,40), self.direction, self.speed, self.damage,3);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new fire(self.x, self.y, self.direction, self.speed, self.damage);
+                    var w = new fire(self.x, self.y, self.direction, self.speed, self.damage,3);
                 }
                 w.sc = 3;
                 parts.push(w);
@@ -209,7 +211,7 @@ function spell(type, direction, x, y){
             self.knock = 20;
             wizard.mana += 40;
             for (i = 0; i < 20; i++){
-                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage);
+                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage,2);
                 parts.push(w);
             }
         }

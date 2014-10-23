@@ -46,7 +46,7 @@ function expball(x,y){
                 self.y += 5;
             }
         }
-        if (self.active && self.x <=  wizard.c.spr.x + 20 && self.x >= wizard.c.spr.x && self.y <= wizard.c.spr.y + 30 && self.y >= wizard.c.spr.y){
+        if (self.active && self.x <=  wizard.c.spr.x + 60 && self.x >= wizard.c.spr.x - 20 && self.y <= wizard.c.spr.y + 60 && self.y >= wizard.c.spr.y - 2){
             wizard.experience += 1;
             self.active = false;
         }
@@ -103,6 +103,8 @@ function water(x,y,d,s,dam,spread){
     self.y = y;
     self.d = d;
     self.s = s;
+    self.dx;
+    self.dy;
     self.dam = dam;
     self.sc = 2;
     self.spreading = spread;
@@ -157,34 +159,37 @@ function water(x,y,d,s,dam,spread){
         }
     }
 }
-function fire(x,y,d,s,dam){
+function fire(x,y,d,s,dam,spread){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
     self.s = s;
+    self.dx;
+    self.dy;
     self.dam = dam;
     self.sc = 1;
+    self.spreading = spread;
     self.active = true;
     self.c = ["#f82f2f","#e53c1d","#fd0404"];
     self.cc = rInt(0,self.c.length);
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     if (self.d == 3){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     self.updatepart = function(){
         self.sizecount -= self.sc;
@@ -212,12 +217,15 @@ function fire(x,y,d,s,dam){
         }
     }
 }
-function air(x,y,d,s,dam){
+function air(x,y,d,s,dam,spread){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
     self.s = s;
+    self.dx;
+    self.dy;
+    self.spreading = spread;
     self.dam = dam;
     self.active = true;
     self.cuts = false;
@@ -226,20 +234,20 @@ function air(x,y,d,s,dam){
     self.cc = rInt(0,self.c.length);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     if (self.d == 3){
-        self.dx = rInt(-2,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-2,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     self.updatepart = function(){
         self.size = self.sizecount / 10;
@@ -273,31 +281,38 @@ function air(x,y,d,s,dam){
         }
     }
 }
-function earth(x,y,d,s,dam){
+function earth(x,y,d,s,dam,spread){
     var self = this;
     self.x = x;
     self.y = y;
     self.d = d;
     self.s = s;
+    self.dx;
+    self.dy;
     self.dam = dam;
     self.active = true;
+    self.spreading = spread;
     self.size = rInt(5,10);
     self.sizecount = self.size * 10;
     if (self.d == 1){
-        self.dx = rInt(-1,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = -1 * self.s;
     }
     if (self.d == 2){
         self.dx = self.s;
-        self.dy = rInt(-1,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     if (self.d == 3){
-        self.dx = rInt(-1,2);
+        self.dx = rInt(-1 * self.spreading, self.spreading);
         self.dy = self.s;
     }
     if (self.d == 4){
         self.dx = -1 * self.s;
-        self.dy = rInt(-1,2);
+        self.dy = rInt(-1 * self.spreading, self.spreading);
+    }
+    if (self.d == 5){
+        self.dx =rInt(-4,5) * self.s;
+        self.dy = rInt(-4,5) * self.s;
     }
     self.updatepart = function(){
         //self.size = self.sizecount / 10;
