@@ -71,8 +71,8 @@ function spell(type, direction, x, y){
             self.damage = 1;
             self.knock = rInt(30,40);
             wizard.mana += 2;
-            for (i = 0; i < 15; i++){
-                var w = new air(self.x + rInt(-10,10), self.y+ rInt(-10,10), self.direction, self.speed, self.damage);
+            for (i = 0; i < 10; i++){
+                var w = new air(self.x + rInt(-5,5), self.y+ rInt(-5,5), self.direction, self.speed, self.damage);
                 w.cuts = true;
             }
             parts.push(w);
@@ -103,12 +103,12 @@ function spell(type, direction, x, y){
             self.damage = 2;
             self.knock = 10;
             wizard.mana += 40;
-            for (i = 0; i < 20; i++){
+            for (i = 0; i < 10; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new water(self.x + rInt(-30,30), self.y+ rInt(-2,3), self.direction, self.speed, self.damage, 0);
+                    var w = new water(self.x + rInt(-20,30), self.y+ rInt(-2,3), self.direction, self.speed, self.damage, 0);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new water(self.x + rInt(-2,3), self.y+ rInt(-30,30), self.direction, self.speed, self.damage, 0);
+                    var w = new water(self.x + rInt(-2,3), self.y+ rInt(-20,30), self.direction, self.speed, self.damage, 0);
                 }
                 w.sc = 1;
                 parts.push(w);
@@ -137,19 +137,24 @@ function spell(type, direction, x, y){
                     var w = new fire(self.x + rInt(-30,30), self.y + rInt(-40,40), self.direction, self.speed, self.damage);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new fire(self.x, self.y, self.direction, self.speed, self.damage);
+                    var w = new fire(self.x + rInt(-40,40), self.y + rInt(-30,30), self.direction, self.speed, self.damage);
                 }
                 w.sc = 3;
                 parts.push(w);
             }
         }
         if (currentype == "Earth"){
-            self.speed = 7;
+            self.speed = 3;
             self.damage = 3;
             self.knock = 20;
-            wizard.mana += 40;
-            for (i = 0; i < 20; i++){
-                var w = new earth(self.x+ rInt(-20,20), self.y+ rInt(-20,20), self.direction, self.speed + rInt(-2,3), self.damage);
+            wizard.mana += 20;
+            for (i = 0; i < 200; i++){
+                if (self.direction == 2 || self.direction == 4){
+                    var w = new earth(self.x + rInt(-10,10), self.y + rInt(-20,20), self.direction, self.speed, self.damage);
+                }
+                if (self.direction == 1 || self.direction == 3){
+                    var w = new earth(self.x + rInt(-20,20), self.y + rInt(-10,10), self.direction, self.speed, self.damage);
+                }
                 parts.push(w);
             }
         }
@@ -157,7 +162,7 @@ function spell(type, direction, x, y){
             self.speed = 15;
             self.damage = 2;
             self.knock = 10;
-            wizard.mana += 2;
+            wizard.mana += 40;
             for (i = 0; i < 5; i++){
                 if (self.direction == 2 || self.direction == 4){
                     var w = new water(self.x + rInt(-30,30), self.y+ rInt(-10,10), self.direction, self.speed, self.damage, 0);
