@@ -10,7 +10,6 @@ function updategame(){
     for (e = 0; e < expbundle.length; e++){
         expbundle[e].updateexp();
     }
-	wizard.updatechar();
     mobs.updatemobs();
     for (p = 0; p < particles.length; p++){
         particles[p].updateparticle();
@@ -28,5 +27,6 @@ function updategame(){
     if (onscreen == false){
         parts = [];
     }
+    wizard.updatechar();
     
 }

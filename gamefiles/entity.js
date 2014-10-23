@@ -8,6 +8,7 @@ function mainchar(x, y){
 	self.y = y;
     self.mana = 0;
     self.spellid = 3;
+    self.casting = false;
     self.experience = 0;
     self.typec = rInt(0,4);
     self.type = types[self.typec];
@@ -15,13 +16,21 @@ function mainchar(x, y){
     currentype = self.type;
     self.timer = 0;
 	self.action = 0;
-	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 4, 1, false);
+	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 4, 4, false);
     self.c.spr.cl = self.typec;
 	self.c.speed = 6;
+    self.c.spr.limit = 2;
 	self.c.direction = "undef";
 	self.c.moving = true;
 	self.updatechar = function(){
         currentspellid = self.spellid;
+        if (self.casting == false){
+            self.c.spr.limited = true;
+        }
+        else 
+        {
+            self.c.spr.limited = false;
+        }
 		self.c.update();
         self.mana -= 1;
         if (self.mana <= 0){
@@ -52,19 +61,24 @@ function mainchar(x, y){
 			self.c.spr.x = 970;
         }
         if (self.c.active == true && self.mana == 0){
+            self.casting = false;
             if (38 in keysDown){
+                self.casting = true;
                 cast(0,1);
                 self.timer = 0;
             }
             if (39 in keysDown){
+                self.casting = true;
                 cast(0,2);
                 self.timer = 0;
             }
             if (40 in keysDown){
+                self.casting = true;
                 cast(0,3);
                 self.timer = 0;
             }
             if (37 in keysDown){
+                self.casting = true;
                 cast(0,4);
                 self.timer = 0;
             }

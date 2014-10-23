@@ -29,6 +29,8 @@ function sprite(src, x, y, w, h, f, l, a, loaded){
     self.l = l;
     self.active = true;
     self.a = a;
+    self.limit = 0;
+    self.limited = false;
     self.cfps = 0;
     self.fps = 10;
     self.loaded = loaded;
@@ -41,6 +43,16 @@ function sprite(src, x, y, w, h, f, l, a, loaded){
             if (self.cfps > self.fps && self.a == 1){
                 self.cfps = 0;
                 self.cf += 1;
+                if (self.cf >= self.f){
+                    self.cf = 0;
+                }
+            }
+            if (self.cfps > self.fps && self.a == 4){
+                self.cfps = 0;
+                self.cf += 1;
+                if (self.limited && self.cf >= self.limit){
+                    self.cf = 0;
+                }
                 if (self.cf >= self.f){
                     self.cf = 0;
                 }
