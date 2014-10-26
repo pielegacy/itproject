@@ -1,10 +1,10 @@
-function mobloader(maxamount){
+function mobloader(){
     var self = this;
     var counter = 0;
     self.currentlevel = 1;
     self.maxamount = rInt(10,15) * self.currentlevel;
-    self.levels = maxamount.length;
-    self.objective = maxamount[self.currentlevel - 1];
+    self.levels = 10;
+    self.objective = 0;
     self.amount = 0;
     self.aliveamount = 0;
     self.spawntype = 0;
@@ -20,7 +20,7 @@ function mobloader(maxamount){
         }
         if (self.amount > 0 && self.aliveamount <= 0){
             self.currentlevel += 1;
-            self.objective = maxamount[self.currentlevel - 1];
+            self.objective = 0;
             if (self.objective == 0){
                 self.maxamount = rInt(10,15) * self.currentlevel;
             }

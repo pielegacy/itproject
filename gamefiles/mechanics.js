@@ -16,8 +16,14 @@ function expball(x,y){
     self.tx = self.x + rInt(-60, 60);
     self.ty = self.y + rInt(0,100);
     self.active = true;
+    self.timer = 0;
+    self.max = rInt(200,300);
     self.moving = true;
     self.updateexp = function(){
+        self.timer += 1;
+        if (self.timer > self.max){
+            self.active = false;
+        }
         if (self.moving){
             if (self.x < self.tx){
                 self.x += rInt(1,5);
