@@ -1,5 +1,5 @@
 var spells = [];
-var types = ["Air", "Water", "Earth", "Fire"];
+var types = ["Air", "Water", "Earth", "Fire", "Plasma"];
 var currentype;
 var currentspellid;
 function mainchar(x, y){
@@ -10,7 +10,7 @@ function mainchar(x, y){
     self.spellid = 1;
     self.casting = false;
     self.experience = 0;
-    self.typec = rInt(0,4);
+    self.typec = rInt(0,5);
     self.type = types[self.typec];
     currentype = self.type;
     self.timer = 0;
@@ -18,7 +18,8 @@ function mainchar(x, y){
     self.smod = 0;
     self.fmod = 0;
 	self.action = 0;
-	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 4, 4, false);
+	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 11, 4, false);
+    document.getElementById("title").innerHTML = self.type;
     self.c.spr.cl = self.typec;
 	self.c.speed = 6;
     self.c.spr.limit = 2;

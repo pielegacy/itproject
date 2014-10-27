@@ -64,6 +64,22 @@ function spell(type, direction, x, y){
                 parts.push(w);
             }
         }
+        if (currentype == "Plasma"){
+            self.speed = 50;
+            self.damage = 100;
+            self.knock = rInt(30,40);
+            wizard.mana += 2;
+            for (i = 0; i < 10; i++){
+                if (self.direction == 2 || self.direction == 4){
+                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
+                }
+                if (self.direction == 1 || self.direction == 3){
+                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
+                }
+                w.sc = 3;
+                parts.push(w);
+            }
+        }
     }
     if (currentspellid == 2){
         if (currentype == "Air"){
@@ -123,10 +139,10 @@ function spell(type, direction, x, y){
             wizard.mana += 2;
             for (i = 0; i < 10; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
+                    var w = new air(self.x, self.y, self.direction, self.speed, self.damage,0);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
+                    var w = new air(self.x, self.y, self.direction, self.speed, self.damage,0);
                 }
                 w.sc = 3;
                 parts.push(w);
