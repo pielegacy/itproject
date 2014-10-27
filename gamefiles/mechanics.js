@@ -475,4 +475,4 @@ function plasma(x,y,d,s,dam,spread){
             self.active = false;
         }
     }
-}/
+}
