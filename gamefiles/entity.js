@@ -7,7 +7,7 @@ function mainchar(x, y){
 	self.x = x;
 	self.y = y;
     self.mana = 0;
-    self.spellid = 3;
+    self.spellid = 1;
     self.casting = false;
     self.experience = 0;
     self.typec = rInt(0,4);

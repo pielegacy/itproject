@@ -1,4 +1,3 @@
-var wizard = new mainchar(200,200);
 var enemies = [];
 var enemysort = [0, 0, 0];
 var expbundle = [];
@@ -7,7 +6,14 @@ var parts = [];
 var running = false;
 var wateronscreen = false;
 var mobs = new mobloader(enemysort);
-function updategame(){
+var wizardlist = [];
+var currentwiz = 0;
+for (m = 0; m < 3; m++){
+    var wiz = new mainchar(200,200);
+    wizardlist.push(wiz);
+}
+var wizard = wizardlist[currentwiz];
+function updategame(){ 
     for (e = 0; e < expbundle.length; e++){
         expbundle[e].updateexp();
     }
@@ -31,7 +37,12 @@ function updategame(){
     wizard.updatechar();
     if (wizard.c.active == false){
         running = false;
-        wizard = new mainchar(200,200);
+        currentwiz += 1;
+        if (currentwiz < wizardlist.length){
+            wizard = wizardlist[currentwiz];
+        } else {
+            document.getElementById("title").innerHTML = "Game Over";
+        }
     }
     
 }
