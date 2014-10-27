@@ -4,6 +4,7 @@ var enemysort = [0, 0, 0];
 var expbundle = [];
 var bloods = [];
 var parts = [];
+var running = false;
 var wateronscreen = false;
 var mobs = new mobloader(enemysort);
 function updategame(){
@@ -28,5 +29,9 @@ function updategame(){
         parts = [];
     }
     wizard.updatechar();
+    if (wizard.c.active == false){
+        running = false;
+        wizard = new mainchar(200,200);
+    }
     
 }

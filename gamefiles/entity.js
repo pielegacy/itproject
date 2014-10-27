@@ -14,6 +14,9 @@ function mainchar(x, y){
     self.type = types[self.typec];
     currentype = self.type;
     self.timer = 0;
+    self.dmod = 0;
+    self.smod = 0;
+    self.fmod = 0;
 	self.action = 0;
 	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 4, 4, false);
     self.c.spr.cl = self.typec;
@@ -46,7 +49,7 @@ function mainchar(x, y){
         ctx.fillStyle = '#262626';
         ctx.font = '15px Arial';
         ctx.textBaseline = 'bottom';
-        ctx.fillText("Mana: " + self.mana, 10, 20);    
+        ctx.fillText("Mana : " + self.mana, 10, 20);    
         for (i = 0; i < spells.length; i++){
             spells[i].updatespell();
         }
@@ -64,7 +67,10 @@ function mainchar(x, y){
 		if (self.x > 970){
 			self.c.spr.x = 970;
         }
-        if (self.c.active == true && self.mana == 0){
+        if (82 in keysDown){
+            running = true;
+        }
+        if (self.c.active == true && self.mana == 0 && running){
             self.casting = false;
             if (38 in keysDown){
                 self.casting = true;
@@ -211,76 +217,78 @@ function enem(x, y, type){
                 }
             }
         }*/
-        if (self.enemyspr.active == true && self.knocked == false){
-            if (wizard.x > self.enemyspr.x){
-                self.dx = self.speed;
-            }
-            if (wizard.x < self.enemyspr.x){
-                self.dx = -1 * self.speed;
-            }
-            if (wizard.y > self.enemyspr.y){
-                self.dy = self.speed;
-            }
-            if (wizard.y < self.enemyspr.y){
-                self.dy = -1 * self.speed;
-            }
-            
-        }
-        if (self.knocked == true){
-            if (self.enemyspr.x >= self.kx - 2 * self.basespeed && self.enemyspr.x <= self.kx + 2 * self.basespeed && self.enemyspr.y >= self.ky - 2 * self.basespeed && self.enemyspr.y <= self.ky + 2 * self.basespeed) {
-                self.knocked = false; 
-            }
-            else {
-                if (self.kx > self.enemyspr.x){
+        if (running){
+            if (self.enemyspr.active == true && self.knocked == false){
+                if (wizard.x > self.enemyspr.x){
                     self.dx = self.speed;
                 }
-                if (self.kx < self.enemyspr.x){
+                if (wizard.x < self.enemyspr.x){
                     self.dx = -1 * self.speed;
                 }
-                if (self.ky > self.enemyspr.y){
+                if (wizard.y > self.enemyspr.y){
                     self.dy = self.speed;
                 }
-                if (self.ky < self.enemyspr.y){
+                if (wizard.y < self.enemyspr.y){
                     self.dy = -1 * self.speed;
                 }
+
             }
-        }
-        
-        if (self.enemyspr.x >= wizard.c.spr.x - 100 && self.enemyspr.x <= wizard.c.spr.x + 100 && self.enemyspr.y >= wizard.c.spr.y - 100 && self.enemyspr.y <= wizard.c.spr.y + 100 && self.type == 1) {
-                self.speed = self.basespeed * 2;
-                self.enemyspr.fps = 2;
-        }
-        else {
-            self.speed = self.basespeed;
-            self.enemyspr.fps = 4;
-        }
-        
-        if (self.enemyspr.x >= wizard.c.spr.x - 2 && self.enemyspr.x <= wizard.c.spr.x + 2 && self.enemyspr.y >= wizard.c.spr.y - 2 && self.enemyspr.y <= wizard.c.spr.y + 2) {
-                self.speed = 0; 
-        }
-        if (self.enemyspr.x >= wizard.c.spr.x - 5 && self.enemyspr.x <= wizard.c.spr.x + 5) {
-                self.dx = 0;
-        }
-        if (self.enemyspr.y >= wizard.c.spr.y - 5 && self.enemyspr.y <= wizard.c.spr.y + 5) {
-                self.dy = 0;
-        }
-        if (self.health <= 0 && self.enemyspr.active == true){
-            mobs.aliveamount -= 1;
-            experience(self.cx, self.cy, self.exp);
-            if (self.type == 2){
-                clot(self.cx, self.cy,1);
+            if (self.knocked == true){
+                if (self.enemyspr.x >= self.kx - 2 * self.basespeed && self.enemyspr.x <= self.kx + 2 * self.basespeed && self.enemyspr.y >= self.ky - 2 * self.basespeed && self.enemyspr.y <= self.ky + 2 * self.basespeed) {
+                    self.knocked = false; 
+                }
+                else {
+                    if (self.kx > self.enemyspr.x){
+                        self.dx = self.speed;
+                    }
+                    if (self.kx < self.enemyspr.x){
+                        self.dx = -1 * self.speed;
+                    }
+                    if (self.ky > self.enemyspr.y){
+                        self.dy = self.speed;
+                    }
+                    if (self.ky < self.enemyspr.y){
+                        self.dy = -1 * self.speed;
+                    }
+                }
+            }
+
+            if (self.enemyspr.x >= wizard.c.spr.x - 100 && self.enemyspr.x <= wizard.c.spr.x + 100 && self.enemyspr.y >= wizard.c.spr.y - 100 && self.enemyspr.y <= wizard.c.spr.y + 100 && self.type == 1) {
+                    self.speed = self.basespeed * 2;
+                    self.enemyspr.fps = 2;
             }
             else {
-                clot(self.cx, self.cy,0);
+                self.speed = self.basespeed;
+                self.enemyspr.fps = 4;
             }
-            self.enemyspr.active = false;
-        }
-        self.enemyspr.x += self.dx;
-        self.enemyspr.y += self.dy;
-        self.cx = self.enemyspr.x + (self.enemyspr.w / 2);
-        self.cy = self.enemyspr.y + (self.enemyspr.h / 2);
-        if (self.cy >= wizard.c.spr.y && self.cy <= wizard.c.spr.y + wizard.c.spr.h && self.cx <= wizard.c.spr.x + wizard.c.spr.w && self.cx >= wizard.c.spr.x && self.enemyspr.active == true){
-            wizard.c.active = false;
+
+            if (self.enemyspr.x >= wizard.c.spr.x - 2 && self.enemyspr.x <= wizard.c.spr.x + 2 && self.enemyspr.y >= wizard.c.spr.y - 2 && self.enemyspr.y <= wizard.c.spr.y + 2) {
+                    self.speed = 0; 
+            }
+            if (self.enemyspr.x >= wizard.c.spr.x - 5 && self.enemyspr.x <= wizard.c.spr.x + 5) {
+                    self.dx = 0;
+            }
+            if (self.enemyspr.y >= wizard.c.spr.y - 5 && self.enemyspr.y <= wizard.c.spr.y + 5) {
+                    self.dy = 0;
+            }
+            if (self.health <= 0 && self.enemyspr.active == true){
+                mobs.aliveamount -= 1;
+                experience(self.cx, self.cy, self.exp);
+                if (self.type == 2){
+                    clot(self.cx, self.cy,1);
+                }
+                else {
+                    clot(self.cx, self.cy,0);
+                }
+                self.enemyspr.active = false;
+            }
+            self.enemyspr.x += self.dx;
+            self.enemyspr.y += self.dy;
+            self.cx = self.enemyspr.x + (self.enemyspr.w / 2);
+            self.cy = self.enemyspr.y + (self.enemyspr.h / 2);
+            if (self.cy >= wizard.c.spr.y && self.cy <= wizard.c.spr.y + wizard.c.spr.h && self.cx <= wizard.c.spr.x + wizard.c.spr.w && self.cx >= wizard.c.spr.x && self.enemyspr.active == true){
+                wizard.c.active = false;
+            }
         }
         self.enemyspr.update();
     }
