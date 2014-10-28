@@ -10,7 +10,7 @@ function mainchar(x, y){
     self.spellid = 1;
     self.casting = false;
     self.experience = 0;
-    self.typec = rInt(0,5);
+    self.typec = rInt(0,types.length);
     self.type = types[self.typec];
     currentype = self.type;
     self.timer = 0;
@@ -19,7 +19,6 @@ function mainchar(x, y){
     self.fmod = 0;
 	self.action = 0;
 	self.c = new character("genuine_wiz.png", self.x, self.y, 30, 30, 4, 11, 4, false);
-    document.getElementById("title").innerHTML = self.type;
     self.c.spr.cl = self.typec;
 	self.c.speed = 6;
     self.c.spr.limit = 2;
@@ -27,6 +26,8 @@ function mainchar(x, y){
 	self.c.moving = true;
 	self.updatechar = function(){
         currentspellid = self.spellid;
+        currentype = self.type;
+        //document.getElementById("title").innerHTML = self.c.spr.cl + " "  + self.typec + " " + self.type;
         if (self.casting == false){
             self.c.spr.limited = true;
         }
