@@ -35,17 +35,17 @@ function spell(type, direction, x, y){
             parts.push(w);
         }
         if (currentype == "Fire"){
-            self.speed = 15;
+            self.speed = 10;
             self.damage = 10;
             self.knock = 8;
             wizard.mana += 20;
-            for (i = 0; i < 3; i++){
-                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage,3);
+            for (i = 0; i < rInt(1,3); i++){
+                var w = new fire(self.x, self.y, self.direction, self.speed, self.damage,5);
                 parts.push(w);
             }
         }
         if (currentype == "Earth"){
-            self.speed = 8;
+            self.speed = 5;
             self.damage = 15;
             self.knock = 20;
             wizard.mana += 30;
@@ -65,10 +65,10 @@ function spell(type, direction, x, y){
             }
         }
         if (currentype == "Plasma"){
-            self.speed = 50;
-            self.damage = 100;
+            self.speed = 10;
+            self.damage = 20;
             self.knock = rInt(30,40);
-            wizard.mana += 2;
+            wizard.mana += 30;
             for (i = 0; i < 10; i++){
                 if (self.direction == 2 || self.direction == 4){
                     var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
@@ -119,12 +119,12 @@ function spell(type, direction, x, y){
             self.damage = 2;
             self.knock = 10;
             wizard.mana += 40;
-            for (i = 0; i < 10; i++){
+            for (i = 0; i < 40; i++){
                 if (self.direction == 2 || self.direction == 4){
-                    var w = new water(self.x + rInt(-20,30), self.y+ rInt(-2,3), self.direction, self.speed, self.damage, 0);
+                    var w = new water(self.x + rInt(-20,30), self.y+ rInt(-2,3), self.direction, self.speed, self.damage, 5);
                 }
                 if (self.direction == 1 || self.direction == 3){
-                    var w = new water(self.x + rInt(-2,3), self.y+ rInt(-20,30), self.direction, self.speed, self.damage, 0);
+                    var w = new water(self.x + rInt(-2,3), self.y+ rInt(-20,30), self.direction, self.speed, self.damage, 5);
                 }
                 w.sc = 1;
                 parts.push(w);
