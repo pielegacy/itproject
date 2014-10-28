@@ -364,18 +364,18 @@ function plasma(x,y,d,s,dam,spread){
     self.sizecount = self.size * 10;
     if (self.d == 1){
         self.dx = rInt(-1 * self.spreading, self.spreading);
-        self.dy = rInt(1 * self.spreading, self.spreading);
+        self.dy = rInt(self.spreading, self.spreading);
     }
     if (self.d == 2){
-        self.dx = rInt(1 * self.spreading, self.spreading);
+        self.dx = rInt(self.spreading, self.spreading);
         self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     if (self.d == 3){
         self.dx = rInt(-1 * self.spreading, self.spreading);
-        self.dy = rInt(1 * self.spreading, self.spreading);
+        self.dy = rInt(self.spreading, self.spreading);
     }
     if (self.d == 4){
-        self.dx = rInt(1 * self.spreading, self.spreading);
+        self.dx = rInt(self.spreading, self.spreading);
         self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     self.updatepart = function(){

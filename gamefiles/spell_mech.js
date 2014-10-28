@@ -66,17 +66,13 @@ function spell(type, direction, x, y){
         }
         if (currentype == "Plasma"){
             self.speed = 10;
-            self.damage = 20;
+            self.damage = 1;
             self.knock = rInt(30,40);
             wizard.mana += 30;
             for (i = 0; i < 10; i++){
-                if (self.direction == 2 || self.direction == 4){
-                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
-                }
-                if (self.direction == 1 || self.direction == 3){
-                    var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
-                }
+                var w = new plasma(self.x, self.y, self.direction, self.speed, self.damage,0);
                 w.sc = 3;
+                w.horiz = 10;
                 parts.push(w);
             }
         }
