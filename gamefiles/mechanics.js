@@ -364,72 +364,7 @@ function plasma(x,y,d,s,dam,spread){
     self.sizecount = self.size * 10;
     if (self.d == 1){
         self.dx = rInt(-1 * self.spreading, self.spreading);
-        self.dy = rInt(self.spreading, self.spreading);
-    }
-    if (self.d == 2){
-        self.dx = rInt(self.spreading, self.spreading);
-        self.dy = rInt(-1 * self.spreading, self.spreading);
-    }
-    if (self.d == 3){
-        self.dx = rInt(-1 * self.spreading, self.spreading);
-        self.dy = rInt(self.spreading, self.spreading);
-    }
-    if (self.d == 4){
-        self.dx = rInt(self.spreading, self.spreading);
-        self.dy = rInt(-1 * self.spreading, self.spreading);
-    }
-    self.updatepart = function(){
-        self.size = self.sizecount / 10;
-        self.horiz += rInt(5,10);
-        if (self.active){
-            self.x += self.dx;
-            self.y += self.dy;
-            ctx.fillStyle = self.c[self.cc];
-            if (self.d == 1 || self.d == 3){
-                ctx.fillRect(self.x, self.y, self.size, self.size * self.horiz);
-            }
-            if (self.d == 2 || self.d == 4){
-                ctx.fillRect(self.x, self.y, self.size * self.horiz, self.size);
-            }
-        }
-        for (e = 0; e < enemies.length; e++){
-            if (self.x > enemies[e].enemyspr.x && self.x < enemies[e].enemyspr.x + enemies[e].enemyspr.w && self.y > enemies[e].enemyspr.y && self.y < enemies[e].enemyspr.y + enemies[e].enemyspr.h && self.active && enemies[e].enemyspr.active){
-                enemies[e].kx = enemies[e].enemyspr.x + self.dx * (self.dam/2);
-                enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
-                enemies[e].knocked = true;
-                enemies[e].health -= self.dam;
-                if (self.cuts == false){
-                    self.active = false;
-                }
-            }
-        }
-        if (self.size < 1){
-            self.active = false;
-        }
-        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
-            self.active = false;
-        }
-    }
-}function plasma(x,y,d,s,dam,spread){
-    var self = this;
-    self.x = x;
-    self.y = y;
-    self.d = d;
-    self.s = s + wizard.fmod;
-    self.dx;
-    self.dy;
-    self.spreading = spread + wizard.smod;
-    self.dam = dam + wizard.dmod;
-    self.active = true;
-    self.cuts = false;
-    self.size = rInt(2,5);
-    self.horiz = 1;
-    self.c = ["#9300ff","#b406ff","#8900ff"];
-    self.cc = rInt(0,self.c.length);
-    self.sizecount = self.size * 10;
-    if (self.d == 1){
-        self.dx = rInt(-1 * self.spreading, self.spreading);
-        self.dy = -1 * self.s;
+        self.dy = self.s * -1;
     }
     if (self.d == 2){
         self.dx = self.s;
@@ -440,7 +375,7 @@ function plasma(x,y,d,s,dam,spread){
         self.dy = self.s;
     }
     if (self.d == 4){
-        self.dx = -1 * self.s;
+        self.dx = self.s * 1;
         self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     self.updatepart = function(){
