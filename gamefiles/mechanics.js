@@ -357,7 +357,9 @@ function plasma(x,y,d,s,dam,spread){
     self.dam = dam + wizard.dmod;
     self.active = true;
     self.cuts = false;
-    self.size = rInt(2,5);
+    self.hit = false;
+    self.timer = rInt(30,50);
+    self.size = 2;
     self.horiz = 1;
     self.c = ["#9300ff","#b406ff","#8900ff"];
     self.cc = rInt(0,self.c.length);
@@ -375,21 +377,33 @@ function plasma(x,y,d,s,dam,spread){
         self.dy = self.s;
     }
     if (self.d == 4){
-        self.dx = self.s * 1;
+        self.dx = self.s * -1;
         self.dy = rInt(-1 * self.spreading, self.spreading);
     }
     self.updatepart = function(){
         self.size = self.sizecount / 10;
-        self.horiz += rInt(5,10);
         if (self.active){
-            self.x += self.dx;
-            self.y += self.dy;
-            ctx.fillStyle = self.c[self.cc];
-            if (self.d == 1 || self.d == 3){
-                ctx.fillRect(self.x, self.y, self.size, self.size * self.horiz);
+            if (self.hit == false){
+                self.x += self.dx;
+                self.y += self.dy;
+                if (self.d == 1 || self.d == 3){
+                    ctx.fillRect(self.x, self.y, self.size, self.size * self.horiz);
+                }
+                if (self.d == 2 || self.d == 4){
+                    ctx.fillRect(self.x, self.y, self.size * self.horiz, self.size);
+                }
             }
-            if (self.d == 2 || self.d == 4){
-                ctx.fillRect(self.x, self.y, self.size * self.horiz, self.size);
+            ctx.fillStyle = self.c[self.cc];
+
+            if (self.hit){
+                self.timer -= 1;
+                if (self.timer <= 0){
+                    self.timer = 0;
+                    self.hit = false;
+                }
+                for (i = 0; i < 10; i ++){
+                    ctx.fillRect(self.x + rInt(-40,40), self.y+ rInt(-40,40), rInt(1,5), rInt(1,5));
+                }
             }
         }
         for (e = 0; e < enemies.length; e++){
@@ -398,8 +412,8 @@ function plasma(x,y,d,s,dam,spread){
                 enemies[e].ky = enemies[e].enemyspr.y + self.dy * (self.dam/2);
                 enemies[e].knocked = true;
                 enemies[e].health -= self.dam;
-                if (self.cuts == false){
-                    self.active = false;
+                if (enemies[e].health <= 0){
+                    self.hit = true;
                 }
             }
         }

@@ -9,6 +9,7 @@ function mainchar(x, y){
     self.mana = 0;
     self.spellid = 1;
     self.casting = false;
+    self.level = 1;
     self.experience = 0;
     self.typec = rInt(0,types.length);
     self.type = types[self.typec];
@@ -40,21 +41,27 @@ function mainchar(x, y){
         if (self.mana <= 0){
             self.mana = 0;
         }
-        /*if (self.experience > 15  * self.spellid){
-            if (self.spellid > 4){
-                self.spellid = 4;
+        if (self.experience > 15  * self.level){
+            var choice = rInt(0,3);
+            self.level += 1;
+            if (choice == 0){
+                self.dmod += 1;
+                document.getElementById("title").innerHTML = "Damage increased";
             }
-            else {
-                self.spellid += 1;
+            if (choice == 1){
+                self.smod += 1;
+                document.getElementById("title").innerHTML = "Spread increased";
             }
-        }*/
+            if (choice == 2){
+                self.fmod += 1;
+                document.getElementById("title").innerHTML = "Speed increased";
+            }
+            self.experience = 0;
+            }
         ctx.fillStyle = '#262626';
         ctx.font = '15px Arial';
         ctx.textBaseline = 'bottom';
         ctx.fillText("Mana : " + self.mana, 10, 20);    
-        for (i = 0; i < spells.length; i++){
-            spells[i].updatespell();
-        }
 		self.x = self.c.spr.x;
 		self.y = self.c.spr.y;
 		if (self.y < 10){
@@ -71,6 +78,7 @@ function mainchar(x, y){
         }
         if (82 in keysDown){
             running = true;
+            self.fmod += 1;
         }
         if (self.c.active == true && self.mana == 0 && running){
             self.casting = false;
