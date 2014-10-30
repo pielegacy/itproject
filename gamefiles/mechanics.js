@@ -425,3 +425,59 @@ function plasma(x,y,d,s,dam,spread){
         }
     }
 }
+function darkshot(x,y,d,s,dam,spread){
+    var self = this;
+    self.x = x;
+    self.y = y;
+    self.d = d;
+    self.s = s + wizard.fmod;
+    self.dx;
+    self.dy;
+    self.spreading = spread + wizard.smod;
+    self.dam = dam + wizard.dmod;
+    self.active = true;
+    self.cuts = false;
+    self.size = rInt(2,5);
+    self.c = ["#191717","#262626","#333"];
+    self.cc = rInt(0,self.c.length);
+    self.sizecount = self.size * 10;
+    if (self.d == 1){
+        self.dx = rInt(-1 * self.spreading, self.spreading);
+        self.dy = -1 * self.s;
+    }
+    if (self.d == 2){
+        self.dx = self.s;
+        self.dy = rInt(-1 * self.spreading, self.spreading);
+    }
+    if (self.d == 3){
+        self.dx = rInt(-1 * self.spreading, self.spreading);
+        self.dy = self.s;
+    }
+    if (self.d == 4){
+        self.dx = -1 * self.s;
+        self.dy = rInt(-1 * self.spreading, self.spreading);
+    }
+    self.updatepart = function(){
+        self.size = self.sizecount / 10;
+        if (self.active){
+            self.x += self.dx;
+            self.y += self.dy;
+            ctx.fillStyle = self.c[self.cc];
+            if (self.d == 1 || self.d == 3){
+                ctx.fillRect(self.x, self.y, self.size, self.size * rInt(7,10));
+            }
+            if (self.d == 2 || self.d == 4){
+                ctx.fillRect(self.x, self.y, self.size * rInt(7,10), self.size);
+            }
+        }
+        if (self.x > wizard.c.spr.x && self.x < wizard.c.spr.x + wizard.c.spr.w && self.y > wizard.c.spr.y && self.y < wizard.c.spr.y + wizard.c.spr.h && self.active && wizard.c.active){
+                wizard.c.active = false;
+            }
+        if (self.size < 1){
+            self.active = false;
+        }
+        if (self.x > 1100 || self.x < -100 || self.y > 800 || self.y < -100){
+            self.active = false;
+        }
+    }
+}

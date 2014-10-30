@@ -14,8 +14,8 @@ function mobloader(){
         if (running){
 //Calder Likes Men//
             counter ++;
-            if (self.currentlevel > 2){
-                self.mobrange = rInt(0,3);
+            if (self.currentlevel > 1){
+                self.mobrange = rInt(0,4);
             }else {
                     self.mobrange = 2;
             }
