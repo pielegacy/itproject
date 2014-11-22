@@ -6,7 +6,6 @@ var parts = [];
 var running = false;
 var wateronscreen = false;
 var mobs = new mobloader(enemysort);
-var bg = new sprite("bg.png", 0, 0, 1000, 700, 1, 1, 0, false);
 var wizardlist = [];
 var currentwiz = 0;
 for (m = 0; m < 3; m++){
@@ -14,8 +13,7 @@ for (m = 0; m < 3; m++){
     wizardlist.push(wiz);
 }
 var wizard = wizardlist[currentwiz];
-function updategame(){
-    bg.update();
+function updategame(){ 
     for (e = 0; e < expbundle.length; e++){
         expbundle[e].updateexp();
     }

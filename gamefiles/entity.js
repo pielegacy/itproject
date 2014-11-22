@@ -61,7 +61,7 @@ function mainchar(x, y){
         ctx.fillStyle = '#262626';
         ctx.font = '15px Arial';
         ctx.textBaseline = 'bottom';
-        //ctx.fillText("Mana : " + self.mana, 10, 20);    
+        ctx.fillText("Mana : " + self.mana, 10, 20);    
 		self.x = self.c.spr.x;
 		self.y = self.c.spr.y;
 		if (self.y < 10){
